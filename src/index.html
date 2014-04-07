@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Simple</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/loading.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <script src="lib/jquery.js"></script>
+    <script src="lib/jquery.tmpl.js"></script>
+    <script src="lib/underscore.js"></script>
+    <script src="lib/base64.js"></script>
+    <script src="lib/github.js"></script>
+    <script src="lib/spine.js"></script>
+    <script src="lib/route.js"></script>
+    <script src="lib/manager.js"></script>
+    <script src="app.js"></script>
+</head>
+<body>
+<div class="container">
+<div id="views">
+    <div id="login">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label>Username</label>
+                <div>
+                    <input type="text" name="user" class="form-control" id="loginuser">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <div>
+                    <input type="password" name="pass" class="form-control" id="loginpass">
+                </div>
+            </div>
+            <div class="form-group">
+                <div>
+                    <input type="submit" class="btn btn-default" value="Sign in" id="loginsubmit">
+                    <span class="label label-danger" id="loginerror" style="display: none;">Invalid username or password</span>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="main">
+        hello!
+    </div>
+</div>
+<div id="loading" style="display: none;">
+    <div class="spinner">
+        <div class="dot1"></div>
+        <div class="dot2"></div>
+    </div>
+</div>
+</div>
+</body>
