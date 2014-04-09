@@ -1,1 +1,1 @@
-A static blog generator with static page
+A static blog generator with a static page
