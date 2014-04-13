@@ -14,7 +14,9 @@
     <script src="lib/spine.js"></script>
     <script src="lib/route.js"></script>
     <script src="lib/manager.js"></script>
+
     <script src="app.js"></script>
+
 </head>
 <body>
 <div class="container">
@@ -44,18 +46,23 @@
     <div id="main">
         <div class="block">
         <h2>Create a repository</h2>
-        <p>Head over to <a href="https://github.com">GitHub</a> and <a href="https://github.com/new">create a new repository</a> named username.github.io, where username is your username on GitHub.</p>
+        <p>Head over to <a href="https://github.com">GitHub</a> and <a href="https://github.com/new">create a new repository</a> named username.github.io, where username is your username on GitHub.(Please selected the "Initialize this repository with a README" when creating the repo.)</p>
         </div>
         <div class="block">
         <h2>Initialize the repository</h2>
-        <a class="btn btn-primary" id="init">Initialize</a>
+        <p><a class="btn btn-primary" id="init">Initialize</a></p>
+        <p><span class="label label-danger" id="initerror" style="display: none;">Error! Please try again!</span></p>
+        <p><span class="label label-success" id="initok" style="display: none;">Initialzition has completed!</span></p>
         </div>
         <div class="block">
         <h2>Go to write</h2>
         <p>If you had initialized the repository you can go to next page directly.</p>
-        <a class="btn btn-primary" id="go">Go</a>
+        <p><a class="btn btn-primary" id="go">Go</a></p>
         </div>
         </p>
+    </div>
+    <div id="posts">
+        hello
     </div>
 </div>
 <div id="loading" style="display: none;">

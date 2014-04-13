@@ -3,7 +3,7 @@
   width: 40px;
   height: 40px;
   position: fixed;
-  top: 0; left: 0; bottom:0; right: 0;
+  top: 0; left: 0; bottom: 0; right: 0;
   
   -webkit-animation: rotate 2.0s infinite linear;
   animation: rotate 2.0s infinite linear;
