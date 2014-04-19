@@ -13,7 +13,7 @@ module.exports = function(grunt) {
 
     concat: {
       dist: {
-        src: ['src/lib/jquery.js', "src/template/js/prism.js", "src/template/js/hogan.min.js"],
+        src: ['src/lib/jquery.js', "src/template/js/prism.js", "src/template/js/hogan.min.js", 'src/lib/spine.js', 'src/lib/route.js', 'src/lib/manager.js'],
         dest: 'src/template/main.js'
       }
     },

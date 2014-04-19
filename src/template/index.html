@@ -16,7 +16,7 @@
 			</h1>
 		</a>
 		<div class="header">
-			<ul>
+			<ul id="pages">
 				<li>
 					<span class="selected">
 						home
@@ -25,13 +25,7 @@
 			</ul>
 		</div>
 	</div>
-<div class="main">
-    <div id="posts">
-    </div>
-    <div class="pages">
-        Pages:
-        <span class="selected">1</span>
-    </div>
+<div class="main" id="main">
 </div>
 	<div class="footer">
 		<p>© Copyright 2014 by isnowfy, Designed by isnowfy</p>
@@ -52,18 +46,76 @@
         </div>
     </div>
     {{/posts}}
+    <div class="pages">
+        Pages:
+        {{#pages}}
+            {{#select}}
+            <span class="selected">{{num}}</span>
+            {{/select}}
+            {{^select}}
+            <a href="#/page/{{num}}">{{num}}</a>
+            {{/select}}
+        {{/pages}}
+    </div>
+</script>
+<script id="pagesTemplate" type="text/mustache">
+    {{#pages}}
+    <li>
+        <a href="{{path}}">{{title}}</a>
+    </li>
+    {{/pages}}
 </script>
 <script>
+var blogData;
 $(document).ready(function() {
     $.ajax({
         url: "main.json",
         type: "GET",
         dataType: "json",
         success: function(data) {
+            blogData = data;
             $("#title").html(data.name);
-            var template = Hogan.compile($("#itemTemplate").html());
-            var html = template.render({"posts": data.posts});
-            $("#posts").html(html);
+            var per = data.number_of_posts_per_page;
+            var n = data.posts.length;
+            var num = Math.floor((n-1)/per)+1;
+            var arr = [];
+            var tmp = [];
+            for (var i = 0; i < n; ++i) {
+                if (i != 0 && i % per == 0) {
+                    arr.push(tmp)
+                    tmp = [];
+                }
+                tmp.push(data.posts[i]);
+            }
+            if (tmp.length > 0)
+                arr.push(tmp);
+            var pages = [{"select": true, "num": 1}];
+            for (var i = 1; i < num; ++i)
+                pages.push({"select": false, "num": i+1});
+            var itemTemplate = Hogan.compile($("#itemTemplate").html());
+            var itemHtml = itemTemplate.render({"posts": arr[0], "pages": pages});
+            $("#main").html(itemHtml);
+            var pagesTemplate = Hogan.compile($("#pagesTemplate").html());
+            var pagesHtml = pagesTemplate.render({"pages": data.pages});
+            $("#pages").append(pagesHtml);
+            var App = Spine.Controller.sub({
+                el: $("#main"),
+                init: function() {
+                    this.routes({
+                        "/page/:page": function(page) {this.go(page);}
+                    });
+                    Spine.Route.setup();
+                },
+                go: function(page) {
+                    page = Math.floor(page.page);
+                    for (var i = 0; i < pages.length; ++i)
+                        pages[i].select = false;
+                    pages[page-1].select = true;
+                    itemHtml = itemTemplate.render({"posts": arr[page-1], "pages": pages});
+                    $("#main").html(itemHtml);
+                }
+                });
+            new App();
         },
         error: function(e) {
             console.log("init error");

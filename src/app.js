@@ -27,6 +27,15 @@ function asyncSeq(success) {
         args[i](finish);
     }
 }
+function syncSeq(success) {
+    var args = Array.prototype.slice.call(arguments, 1);
+    var finish = asyncFinish(1, success);
+    var l = args.length;
+    var tmp = curry(args[l-1], finish);
+    for (var i = l-2; i >= 0; --i)
+        tmp = curry(args[i], tmp);
+    tmp();
+}
 function errShow(item, err) {
     if (typeof err != "undefined" && err != null) {
         console.log(err);
@@ -52,26 +61,13 @@ function asyncWriteFile(source, target, err, finish) {
         error: function(e) {err(e);}
     });
 }
-function asyncWriteTmpl(source, data, target, err, finish) {
-    if (!repo)
-        Spine.Route.navigate("");
-    $.ajax({
-        url: source, 
-        type: "GET",
-        success: function(markup) {
-            $.template("tmpTemplate", markup);
-            asyncWrite($.tmpl("tmpTemplate", data), target, err, finish);
-        },
-        error: function(e) {err(e);}
-    });
-}
 function checkpass(user, pass, cbsuccess, cberror) {
     var github = new Github({
         username: user,
         password: pass,
         auth: "basic"
     });
-    u = github.getUser();
+    var u = github.getUser();
     u.show(user, function(err, ret){
         $("#loading").hide()
         if (!cberror(err)) {
@@ -120,10 +116,13 @@ $(document).ready(function() {
         },
         initRepo: function(e) {
             e.preventDefault();
-            error = curry(errShow, this.err);
-            a1 = curry(asyncWriteTmpl, "template/index.html", {},  "index.html", error);
-            a2 = curry(asyncWriteFile, "template/style.css", "style.css", error);
-            asyncSeq(function() {$("#initok").show()}, a1, a2);
+            var error = curry(errShow, this.err);
+            var a1 = curry(asyncWriteFile, "template/index.html", "index.html", error);
+            var a2 = curry(asyncWriteFile, "template/main.css", "main.css", error);
+            var a3 = curry(asyncWriteFile, "template/main.js", "main.js", error);
+            var config = {"name": global.user, "number_of_posts_per_page": 5, "posts": [], "pages": []};
+            var a4 = curry(asyncWrite, JSON.stringify(config), "main.json", error);
+            syncSeq(function() {$("#initok").show()}, a1, a2, a3, a4);
         },
         go: function(e) {
             this.navigate("/posts");
