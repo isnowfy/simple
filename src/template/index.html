@@ -1,1 +1,75 @@
-test
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="Keywords" content="blog"/>
+    <meta name="Description" content="blog"/>
+    <title>simple</title>
+    <link rel="shortcut icon" href="/static/favicon.png"/>
+    <link rel="stylesheet" type="text/css" href="main.css" />
+</head>
+<body>
+	<div class="wrap-header">
+		<a href="/" class="logo">
+			<h1 id="title">
+			</h1>
+		</a>
+		<div class="header">
+			<ul>
+				<li>
+					<span class="selected">
+						home
+					</span>
+				</li>
+			</ul>
+		</div>
+	</div>
+<div class="main">
+    <div id="posts">
+    </div>
+    <div class="pages">
+        Pages:
+        <span class="selected">1</span>
+    </div>
+</div>
+	<div class="footer">
+		<p>© Copyright 2014 by isnowfy, Designed by isnowfy</p>
+	</div>
+<script src="main.js"></script>
+<script id="itemTemplate" type="text/mustache">
+    {{#posts}}
+    <div class="item">
+        <div class="date">
+            <div class="little">
+            </div>
+            {{date}}
+        </div>
+        <div class="title">
+            <h2>
+                <a href="{{path}}">{{title}}</a>
+            </h2>
+        </div>
+    </div>
+    {{/posts}}
+</script>
+<script>
+$(document).ready(function() {
+    $.ajax({
+        url: "main.json",
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+            $("#title").html(data.name);
+            var template = Hogan.compile($("#itemTemplate").html());
+            var html = template.render({"posts": data.posts});
+            $("#posts").html(html);
+        },
+        error: function(e) {
+            console.log("init error");
+        }
+    });    
+});
+</script>
+</body>
+</html>

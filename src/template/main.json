@@ -1,0 +1,26 @@
+{
+"name": "isnowfy",
+"number_of_posts_per_page": 5,
+"posts": [
+        {
+        "title": "title",
+        "path": "/",
+        "date": "2013-07-01 10:20",
+        "tags": "split with space"
+        },
+        {
+        "title": "title1",
+        "path": "/",
+        "date": "2013-07-01 10:20",
+        "tags": "split with space"
+        }
+        ],
+"pages": [
+        {
+        "title": "about",
+        "path": "/",
+        "date": "2013-07-01 10:20",
+        "tags": "split with space"
+        }
+        ]
+}
