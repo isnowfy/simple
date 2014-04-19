@@ -6,22 +6,22 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),  
     cssmin: {
       minify: {
-        src: 'src/template/*.css',
-        dest: 'src/bin/main.min.css'
+        src: 'src/template/css/*.css',
+        dest: 'src/template/main.css'
       }
     },
 
     concat: {
       dist: {
-        src: ['src/template/prism.js', 'src/lib/jquery.js'],
-        dest: 'src/bin/main.js'
+        src: ['src/template/js/prism.js', 'src/lib/jquery.js'],
+        dest: 'src/template/main.js'
       }
     },
 
     uglify: {
       build: {
-        src: 'src/bin/main.js',
-        dest: 'src/bin/main.min.js'
+        src: 'src/template/main.js',
+        dest: 'src/template/main.js'
       }
     }
 
