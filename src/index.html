@@ -5,6 +5,7 @@
     <title>Simple</title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/loading.css">
+    <link rel="stylesheet" type="text/css" href="css/pen.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <script src="lib/jquery.js"></script>
     <script src="lib/underscore.js"></script>
@@ -13,6 +14,8 @@
     <script src="lib/spine.js"></script>
     <script src="lib/route.js"></script>
     <script src="lib/manager.js"></script>
+    <script src="lib/pen.js"></script>
+    <script src="template/js/hogan.min.js"></script>
 
     <script src="app.js"></script>
 
@@ -60,8 +63,45 @@
         </div>
         </p>
     </div>
-    <div id="posts">
-        hello
+    <div id="posts" class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-md-3 sidebar">
+                <a class="nav-btn btn btn-default" href="#">New post</a>
+                <ul class="nav nav-sidebar">
+                    <li class="nav-active">
+                        <a href="#">123</a>
+                    </li>
+                    <li>
+                        <a href="#">234</a>
+                    </li>
+                </ul>
+                <a class="nav-btn btn btn-default" href="#">New page</a>
+                <ul class="nav nav-sidebar">
+                    <li class="nav-active">
+                        <a href="#">123</a>
+                    </li>
+                    <li>
+                        <a href="#">123</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="post-content col-sm-9 col-sm-offset-3 col-md-9 col-md-offset-3">
+                <div class="page-header">
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="posttitle" placeholder="Title">
+                            <input type="text" class="form-control" id="postpath" placeholder="Url ike intro.html">
+                            <input type="text" class="form-control" id="postdate" placeholder="2014-02-01 10:10">
+                            <input type="text" class="form-control" id="posttag" placeholder="Tags split with space">
+                            <a class="btn btn-default" href="#">save</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="editContent">
+                    123
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <div id="loading" style="display: none;">
@@ -71,4 +111,9 @@
     </div>
 </div>
 </div>
+<script id="postsItem" type="text/mustache">
+</script>
+<script>
+var editor = new Pen({editor: '#editContent', stay: false});
+</script>
 </body>

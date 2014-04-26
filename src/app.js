@@ -136,6 +136,13 @@ $(document).ready(function() {
         el: $("#posts"),
         init: function() {
             $("#loading").hide();
+            if (repo != null) {
+                repo.read("master", "main.json", function(err, data) {
+                    var config = JSON.parse(data);
+                    var itemTemplate = Hogan.compile($("postsItem").html());
+                    var itemHtml = itemTemplate.render();
+                });
+            }
         }
     });
     var SimpleApp = Spine.Controller.sub({

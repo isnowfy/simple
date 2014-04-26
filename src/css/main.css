@@ -85,3 +85,55 @@ body {
 #views > *:not(.active) {
     display: none;
 }
+
+.sidebar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background-color: #f5f5f5;
+    border-right: 1px solid #eee;
+}
+
+.nav-sidebar {
+    margin-top: 10px;
+    margin-right:-16px;
+    margin-bottom: 20px;
+    margin-left: -15px;
+    font-size: 14px;
+}
+
+.nav {
+    padding-left: 0;
+    list-style: none;
+}
+
+.nav-active {
+    background: #428bca;
+}
+
+.nav-active > a {
+    color: #fff;
+}
+
+.nav > a {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+}
+
+.page-header {
+    padding-bottom: 9px;
+    margin: 0 0 20px;
+    border-bottom: 1px solid #eee;
+}    
+
+.post-content {
+    position: absolute;
+    right: 0;
+}
+
+.nav-btn {
+    margin: 10px 30px;
+    width: 70%;
+}
