@@ -26,7 +26,7 @@
     <div id="login">
         <form class="form-horizontal">
             <div class="form-group">
-                <label>Username</label>
+                <label>Github username</label>
                 <div>
                     <input type="text" name="user" class="form-control" id="loginuser">
                 </div>
@@ -66,23 +66,11 @@
     <div id="posts" class="container-fluid">
         <div class="row">
             <div class="col-sm-3 col-md-3 sidebar">
-                <a class="nav-btn btn btn-default" href="#">New post</a>
-                <ul class="nav nav-sidebar">
-                    <li class="nav-active">
-                        <a href="#">123</a>
-                    </li>
-                    <li>
-                        <a href="#">234</a>
-                    </li>
+                <a class="nav-btn btn btn-default" href="#/posts/newpost">New post</a>
+                <ul class="nav nav-sidebar" id="postItems">
                 </ul>
-                <a class="nav-btn btn btn-default" href="#">New page</a>
-                <ul class="nav nav-sidebar">
-                    <li class="nav-active">
-                        <a href="#">123</a>
-                    </li>
-                    <li>
-                        <a href="#">123</a>
-                    </li>
+                <a class="nav-btn btn btn-default" href="#/posts/newpage">New page</a>
+                <ul class="nav nav-sidebar" id="pageItems">
                 </ul>
             </div>
             <div class="post-content col-sm-9 col-sm-offset-3 col-md-9 col-md-offset-3">
@@ -92,13 +80,14 @@
                             <input type="text" class="form-control" id="posttitle" placeholder="Title">
                             <input type="text" class="form-control" id="postpath" placeholder="Url ike intro.html">
                             <input type="text" class="form-control" id="postdate" placeholder="2014-02-01 10:10">
-                            <input type="text" class="form-control" id="posttag" placeholder="Tags split with space">
-                            <a class="btn btn-default" href="#">save</a>
+                            <input type="text" class="form-control" id="posttags" placeholder="Tags split with space">
+                            <a class="btn btn-default" href="#" id="postSave">save</a>
+                            <a class="btn btn-danger" href="#" id="postDelete">delete</a>
                         </div>
                     </div>
                 </div>
                 <div id="editContent">
-                    123
+                    You can directly write your content here!
                 </div>
             </div>
         </div>
@@ -112,8 +101,15 @@
 </div>
 </div>
 <script id="postsItem" type="text/mustache">
-</script>
-<script>
-var editor = new Pen({editor: '#editContent', stay: false});
+{{#items}}
+{{#active}}
+<li class="nav-active">
+{{/active}}
+{{^active}}
+<li>
+{{/active}}
+    <a href="#/posts/{{type}}/{{num}}">{{title}}</a>
+</li>
+{{/items}}
 </script>
 </body>

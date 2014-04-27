@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="Keywords" content="blog"/>
     <meta name="Description" content="blog"/>
-    <title>simple</title>
+    <title>Simple</title>
     <link rel="shortcut icon" href="/static/favicon.png"/>
     <link rel="stylesheet" type="text/css" href="/main.css" />
 </head>
@@ -23,7 +23,9 @@
 	</div>
 <div class="main">
 <div class="entry" id="main">
+<!-- content -->
 //content//
+<!-- content end -->
 </div>
 </div>
 	<div class="footer">
@@ -57,7 +59,9 @@ $(document).ready(function() {
             var pagesTemplate = Hogan.compile($("#pagesTemplate").html());
             var pagesHtml = pagesTemplate.render({"pages": data.pages});
             $("#pages").append(pagesHtml);
+            //path
             var path = "//path//";
+            //path end
             var now = 0;
             for (var i = 0; i < data.posts.length; ++i)
                 if (path == data.posts[i].path)

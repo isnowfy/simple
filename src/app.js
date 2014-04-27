@@ -1,5 +1,9 @@
 var global = {};
+var gconfig = null;
 var repo = null;
+var editor = null;
+var contentpattern = /<!-- content -->\n(.*)\n<!-- content end -->\n/m;
+var pathpattern = /\/\/path\n(.*)\n\/\/path end\n/m;
 function curry(fn) {
     var args = Array.prototype.slice.call(arguments, 1);
     return function() {
@@ -134,13 +138,74 @@ $(document).ready(function() {
     });
     var Posts = Spine.Controller.sub({
         el: $("#posts"),
-        init: function() {
+        init: function(param) {
             $("#loading").hide();
+            if (editor != null)
+                editor.destroy();
+            var type = null;
+            var num = null;
+            var now = null;
+            if (typeof param != "undefined" && param.hasOwnProperty("type"))
+                type = param.type;
+            if (typeof param != "undefined" && param.hasOwnProperty("num"))
+                num = param.num;
             if (repo != null) {
+                $("#loading").show();
                 repo.read("master", "main.json", function(err, data) {
+                    $("#loading").hide();
                     var config = JSON.parse(data);
-                    var itemTemplate = Hogan.compile($("postsItem").html());
-                    var itemHtml = itemTemplate.render();
+                    gconfig = config;
+                    var posts = config.posts;
+                    var pages = config.pages;
+                    for (var i = 0; i < posts.length; ++i) {
+                        posts[i].num = i;
+                        posts[i].type = "post";
+                        posts[i].active = false;
+                        if (type == "post" && num != "null" && Math.floor(num) == i) {
+                            posts[i].active = true;
+                            now = posts[i];
+                            $("#postSave").attr("href", "#/posts/savepost");
+                            $("#postDelete").attr("href", "#/posts/deletepost/"+i);
+                        }
+                    }
+                    for (var i = 0; i < pages.length; ++i) {
+                        pages[i].num = i;
+                        pages[i].type = "page";
+                        pages[i].active = false;
+                        if (type == "page" && num != "null" && Math.floor(num) == i) {
+                            pages[i].active = true;
+                            now = pages[i];
+                            $("#postSave").attr("href", "#/posts/savepage");
+                            $("#postDelete").attr("href", "#/posts/deletepage/"+i);
+                        }
+                    }
+                    var itemTemplate = Hogan.compile($("#postsItem").html());
+                    var postsItemHtml = itemTemplate.render({items: posts});
+                    var pagesItemHtml = itemTemplate.render({items: pages});
+                    $("#postItems").html(postsItemHtml);
+                    $("#pageItems").html(pagesItemHtml);
+                    if (type != null && type.slice(0, 3) == "new") {
+                        if (type.slice(3) == "post") {
+                            $("#postSave").attr("href", "#/posts/savepost");
+                            $("#postDelete").attr("href", "#/posts");
+                        }
+                        if (type.slice(3) == "page") {
+                            $("#postSave").attr("href", "#/posts/savepage");
+                            $("#postDelete").attr("href", "#/posts");
+                        }
+                        editor = new Pen("#editContent");
+                    }
+                    if (now != null) {
+                        $("#posttitle").val(now.title);
+                        $("#postpath").val(now.path);
+                        $("#postdate").val(now.date);
+                        $("#posttags").val(now.tags);
+                        repo.read("master", now.path, function(err, data) {
+                            var content = data.match(contentpattern)[1];
+                            $("#editContent").html(content);
+                            editor = new Pen("#editContent");
+                        });
+                    }
                 });
             }
         }
@@ -154,6 +219,88 @@ $(document).ready(function() {
             this.routes({
                 "": function() {this.logins.init();this.logins.active();},
                 "/main": function() {this.mains.init();this.mains.active();},
+                "/posts/:type/:num": function(param) {
+                    var type = param.type;
+                    var num = Math.floor(param.num);
+                    var temp = this;
+                    if (type.slice(0, 6) == "delete") {
+                        $("#loading").show();
+                        var posts = [];
+                        if (type == "deletepost") {
+                            var now = gconfig.posts[num];
+                            for (var i = 0; i < gconfig.posts.length; ++i) {
+                                if (i != num)
+                                    posts.push(gconfig.posts[i]);
+                            }
+                            gconfig.posts = posts;
+                        }
+                        if (type == "deletepage") {
+                            var now = gconfig.pages[num];
+                            for (var i = 0; i < gconfig.pages.length; ++i) {
+                                if (i != num)
+                                    posts.push(gconfig.pages[i]);
+                            }
+                            gconfig.pages = posts;
+                        }
+                        repo.delete("master", now.path, function(err) {
+                            repo.write("master", "main.json", JSON.stringify(gconfig), "simple", function(err) {
+                                temp.posts.init(param);
+                                temp.posts.active();
+                            });
+                        });
+                    }
+                    else {
+                        temp.posts.init(param);
+                        temp.posts.active();
+                    }
+                },
+                "/posts/:type": function(param) {
+                    var type = param.type;
+                    var temp = this;
+                    if (type.slice(0, 4) == "save") {
+                        $("#loading").show();
+                        if (type == "savepost") {
+                            var template = "template/post.html";
+                            var posts = gconfig.posts;
+                        }
+                        if (type == "savepage") {
+                            var template = "template/page.html";
+                            var posts = gconfig.pages;
+                        }
+                        var now = {"title": $("#posttitle").val(),
+                                   "date": $("#postdate").val(),
+                                   "tags": $("#posttags").val(),
+                                   "path": $("#postpath").val()};
+                        var mark = null;
+                        for (var i = 0; i < posts.length; ++i)
+                            if (posts[i].path == now.path)
+                                mark = i;
+                        if (mark != null)
+                            posts[i] = now;
+                        else
+                            posts.push(now);
+                        var content = $("#editContent").html();
+                        $.ajax({
+                            url: template, 
+                            type: "GET",
+                            success: function(data) {
+                                data = data.replace(contentpattern, "<!-- content -->\n"+content+"\n<!-- content end -->\n");
+                                data = data.replace(pathpattern, "//path\nvar path=\""+now.path+"\";\n//path end\n");
+                                repo.write("master", now.path, data, "simple", function(err) {
+                                    repo.write("master", "main.json", JSON.stringify(gconfig), "simple", function(err) {
+                                        temp.posts.init(param);
+                                        temp.posts.active();
+                                    });    
+                                });
+                            },
+                            error: function(e) {err(e);}
+                        });
+                    }
+                    else {
+                        temp.posts.init(param);
+                        temp.posts.active();
+                    }
+                },
                 "/posts": function() {this.posts.init();this.posts.active();}
             });
             this.manager = new Spine.Manager(this.logins, this.mains, this.posts);
