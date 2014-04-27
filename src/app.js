@@ -276,7 +276,7 @@ $(document).ready(function() {
                             if (posts[i].path == now.path)
                                 mark = i;
                         if (mark != null)
-                            posts[i] = now;
+                            posts[mark] = now;
                         else
                             posts.push(now);
                         var content = $("#editContent").html();
