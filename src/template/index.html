@@ -17,11 +17,6 @@
 		</a>
 		<div class="header">
 			<ul id="pages">
-				<li>
-					<span class="selected">
-						home
-					</span>
-				</li>
 			</ul>
 		</div>
 	</div>
@@ -31,6 +26,26 @@
 		<p>© Copyright 2014 by isnowfy, Designed by isnowfy</p>
 	</div>
 <script src="main.js"></script>
+<script id="homeSelectedTemplate" type="text/mustache">
+    <li>
+	 	<span class="selected">
+	 		home
+	 	</span>
+    </li>
+    <li>
+        <a href="#/tags">tags</a>
+    </li>
+</script>
+<script id="tagsSelectedTemplate" type="text/mustache">
+	<li>
+	 	<a href="/">home</a>
+	</li>
+    <li>
+	    <span class="selected">
+            tags
+	 	</span>
+    </li>
+</script>
 <script id="itemTemplate" type="text/mustache">
     {{#posts}}
     <div class="item">
@@ -65,15 +80,22 @@
     </li>
     {{/pages}}
 </script>
+<script id="tagsTemplate" type="text/mustache">
+    <ul style="list-style: none">
+        {{#tags}}
+        <li style="display:inline; margin: 15px;">
+            <a href="{{path}}" style="font-size: {{size}}%">{{name}}</a>
+        </li>
+        {{/tags}}
+    </ul>
+</script>
 <script>
-var blogData;
 $(document).ready(function() {
     $.ajax({
         url: "main.json",
         type: "GET",
         dataType: "json",
         success: function(data) {
-            blogData = data;
             $("#title").html(data.name);
             var per = data.number_of_posts_per_page;
             var n = data.posts.length;
@@ -97,12 +119,18 @@ $(document).ready(function() {
             $("#main").html(itemHtml);
             var pagesTemplate = Hogan.compile($("#pagesTemplate").html());
             var pagesHtml = pagesTemplate.render({"pages": data.pages});
+            var homeSelectedTemplate = Hogan.compile($("#homeSelectedTemplate").html());
+            var homeSelectedHtml = homeSelectedTemplate.render();
+            var tagsSelectedTemplate = Hogan.compile($("#tagsSelectedTemplate").html());
+            var tagsSelectedHtml = tagsSelectedTemplate.render();
+            $("#pages").html(homeSelectedHtml);
             $("#pages").append(pagesHtml);
             var App = Spine.Controller.sub({
                 el: $("#main"),
                 init: function() {
                     this.routes({
-                        "/page/:page": function(page) {this.go(page);}
+                        "/page/:page": function(page) {this.go(page);},
+                        "/tags": function() {this.tags();}
                     });
                     Spine.Route.setup();
                 },
@@ -113,8 +141,36 @@ $(document).ready(function() {
                     pages[page-1].select = true;
                     itemHtml = itemTemplate.render({"posts": arr[page-1], "pages": pages});
                     $("#main").html(itemHtml);
+                    $("#pages").html(homeSelectedHtml);
+                    $("#pages").append(pagesHtml);
+                },
+                tags: function() {
+                    var ts = {};
+                    var posts = data.posts;
+                    var tf = function() {
+                        for (var i = 0; i < posts.length; ++i) {
+                            var tmp = posts[i].tags.split(" ");
+                            for (var j = 0; j < tmp.length; ++j) {
+                                if (!(tmp[j] in ts))
+                                    ts[tmp[j]] = 0;
+                                ts[tmp[j]]++;
+                            }
+                        }
+                    }
+                    tf();
+                    posts = data.pages;
+                    tf();
+                    var ans = [];
+                    for (var k in ts) {
+                        ans.push({"name": k, "size": 100+Math.sqrt(ts[k]-1)*30, "path": "#/tags/"+k});
+                    }
+                    var tagsTemplate = Hogan.compile($("#tagsTemplate").html());
+                    var tagsHtml = tagsTemplate.render({"tags": ans});
+                    $("#main").html(tagsHtml);
+                    $("#pages").html(tagsSelectedHtml);
+                    $("#pages").append(pagesHtml);
                 }
-                });
+            });
             new App();
         },
         error: function(e) {

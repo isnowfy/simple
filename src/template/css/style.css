@@ -39,13 +39,13 @@ body {
 }
 a {
 	text-decoration: none;
-	color: black;
-}
-a:hover {
 	color: #E93071;
 }
+a:hover {
+	border-bottom: 1px solid #E93071;
+}
 .selected {
-	color: #E93071;	
+	color: black;
 }
 .item {
 	margin: 40px 70px;

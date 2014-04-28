@@ -12,13 +12,13 @@
         "title": "title1",
         "path": "/",
         "date": "2013-07-01 10:20",
-        "tags": "split with space"
+        "tags": "test with space"
         },
         {
         "title": "title2",
         "path": "/",
         "date": "2013-07-01 10:20",
-        "tags": "split with space"
+        "tags": "test test2 space"
         }
         ],
 "pages": [
@@ -26,7 +26,7 @@
         "title": "about",
         "path": "/",
         "date": "2013-07-01 10:20",
-        "tags": "split with space"
+        "tags": "split space"
         }
         ]
 }
