@@ -53,7 +53,11 @@ function asyncWrite(data, target, err, finish) {
     if (!repo)
         Spine.Route.navigate("");
     repo.write("master", target, data, "simple",
-               function(e) {finish();err(e);});
+               function(e) {
+                   var ret = err(e);
+                   if (ret != false)
+                       finish();
+                });
 }
 function asyncWriteFile(source, target, err, finish) {
     if (!repo)
@@ -126,7 +130,8 @@ $(document).ready(function() {
             var a3 = curry(asyncWriteFile, "template/main.js", "main.js", error);
             var config = {"name": global.user, "number_of_posts_per_page": 5, "posts": [], "pages": []};
             var a4 = curry(asyncWrite, JSON.stringify(config), "main.json", error);
-            syncSeq(function() {$("#initok").show()}, a1, a2, a3, a4);
+            var a5 = curry(asyncWrite, "", "CNAME", error);
+            syncSeq(function() {$("#initok").show()}, a1, a2, a3, a4, a5);
         },
         go: function(e) {
             this.navigate("/posts");
@@ -200,7 +205,9 @@ $(document).ready(function() {
                         $("#postpath").val(now.path);
                         $("#postdate").val(now.date);
                         $("#posttags").val(now.tags);
+                        $("#loading").show();
                         repo.read("master", now.path, function(err, data) {
+                            $("#loading").hide();
                             var content = data.match(contentpattern)[1];
                             $("#editContent").html(content);
                             editor = new Pen("#editContent");

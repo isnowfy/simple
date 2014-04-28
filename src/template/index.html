@@ -53,7 +53,7 @@
             <span class="selected">{{num}}</span>
             {{/select}}
             {{^select}}
-            <a href="#/page/{{num}}">{{num}}</a>
+            <a href="{{path}}">{{num}}</a>
             {{/select}}
         {{/pages}}
     </div>
@@ -89,9 +89,9 @@ $(document).ready(function() {
             }
             if (tmp.length > 0)
                 arr.push(tmp);
-            var pages = [{"select": true, "num": 1}];
+            var pages = [{"select": true, "num": 1, "path": "#/page/1"}];
             for (var i = 1; i < num; ++i)
-                pages.push({"select": false, "num": i+1});
+                pages.push({"select": false, "num": i+1, "path": "#/page/"+(i+1)});
             var itemTemplate = Hogan.compile($("#itemTemplate").html());
             var itemHtml = itemTemplate.render({"posts": arr[0], "pages": pages});
             $("#main").html(itemHtml);
