@@ -1,41 +1,36 @@
 body {
 	margin: 0;
+    font-family: "Galdeano","Hiragino Sans GB","Microsoft YaHei",Trebuchet,"Trebuchet MS",Tahoma,"Lucida Grande","Lucida Sans Unicode",Verdana,sans-serif;
 }
-.wrap-header, .main, .footer {
+.main {
 	overflow: hidden;
 	margin: 0 auto;
-	width: 640px;
-}
-.header {
-	height: 40px;
-	border-bottom: 2px dashed #888;
+	width: 600px;
+    position: relative;
 }
 .wrap-header h1 {
     width: 100%;
     height: 40px;
+	color: #E93071;
+    padding: 20px 0 10px 0;
+	border-bottom: 2px dashed #888;
+    margin: 0 0 10px;
 }
-.logo {
-	float: left;
-	background: #E93071;
-	height: 80px;
-	text-align: center;
-    display: block;
-	padding: 0 30px;
-    position: relative;
-}
-.logo h1 {
-	vertical-align: middle;
-	color: white;
-}
-.header ul {
-	margin-top: 20px;
-	float: right;
+.header {
+	margin-top: 60px;
+    width: 140px;
+    position: absolute;
+    float: left;
+    text-align: right;
+    font-family: "Electrolize",sans-serif;
 }
 .header li {
-	display: inline;
 	list-style: none;
 	text-transform: uppercase;
-	margin-right: 20px;
+	margin: 30px 0;
+}
+.header a {
+    color: black;
 }
 a {
 	text-decoration: none;
@@ -48,26 +43,25 @@ a:hover {
 	color: black;
 }
 .item {
-	margin: 40px 70px;
-	border-bottom: 1px solid #eee;
-	padding: 0 0 10px 0;
+	margin: 10px 0;
+	padding: 1px 0;
 }
 .little {
 	float: left;
 	margin-right: 10px;
 	width: 3px;
-	height: 34px;
+	height: 30px;
 	border-radius: 4px;
-	background: #E93071;
+	background: #C5C5BD;
 }
 .date {
 	float: left;
 	color: #C5C5BD;
-	font-size: 17px;
+	font-size: 13px;
 	text-transform: uppercase;
 	font-weight: bold;
-	width: 120px;
-	padding: 5px;
+	width: 160px;
+	padding: 17px 0 0;
 }
 .title {
 	padding: 0;

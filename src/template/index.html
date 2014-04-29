@@ -10,42 +10,28 @@
     <link rel="stylesheet" type="text/css" href="main.css" />
 </head>
 <body>
-	<div class="wrap-header">
-		<a href="/" class="logo">
-			<h1 id="title">
-			</h1>
-		</a>
-		<div class="header">
-			<ul id="pages">
-			</ul>
-		</div>
-	</div>
-<div class="main" id="main">
+<div class="header">
+    <ul id="pages">
+        <li>
+            <a href="/">home</a>
+        </li>
+        <li>
+            <a href="/#/tags">tags</a>
+        </li>
+    </ul>
 </div>
-	<div class="footer">
-		<p>© Copyright 2014 by isnowfy, Designed by isnowfy</p>
-	</div>
+<div class="main">
+    <div class="wrap-header">
+        <h1 id="title">
+        </h1>
+    </div>
+    <div class="innermain" id="main">
+    </div>
+    <div class="footer">
+        <p>© Copyright 2014 by isnowfy, Designed by isnowfy</p>
+    </div>
+</div>
 <script src="main.js"></script>
-<script id="homeSelectedTemplate" type="text/mustache">
-    <li>
-	 	<span class="selected">
-	 		home
-	 	</span>
-    </li>
-    <li>
-        <a href="#/tags">tags</a>
-    </li>
-</script>
-<script id="tagsSelectedTemplate" type="text/mustache">
-	<li>
-	 	<a href="/">home</a>
-	</li>
-    <li>
-	    <span class="selected">
-            tags
-	 	</span>
-    </li>
-</script>
 <script id="itemTemplate" type="text/mustache">
     {{#posts}}
     <div class="item">
@@ -119,11 +105,6 @@ $(document).ready(function() {
             $("#main").html(itemHtml);
             var pagesTemplate = Hogan.compile($("#pagesTemplate").html());
             var pagesHtml = pagesTemplate.render({"pages": data.pages});
-            var homeSelectedTemplate = Hogan.compile($("#homeSelectedTemplate").html());
-            var homeSelectedHtml = homeSelectedTemplate.render();
-            var tagsSelectedTemplate = Hogan.compile($("#tagsSelectedTemplate").html());
-            var tagsSelectedHtml = tagsSelectedTemplate.render();
-            $("#pages").html(homeSelectedHtml);
             $("#pages").append(pagesHtml);
             var App = Spine.Controller.sub({
                 el: $("#main"),
@@ -141,8 +122,6 @@ $(document).ready(function() {
                     pages[page-1].select = true;
                     itemHtml = itemTemplate.render({"posts": arr[page-1], "pages": pages});
                     $("#main").html(itemHtml);
-                    $("#pages").html(homeSelectedHtml);
-                    $("#pages").append(pagesHtml);
                 },
                 tags: function() {
                     var ts = {};
@@ -167,8 +146,6 @@ $(document).ready(function() {
                     var tagsTemplate = Hogan.compile($("#tagsTemplate").html());
                     var tagsHtml = tagsTemplate.render({"tags": ans});
                     $("#main").html(tagsHtml);
-                    $("#pages").html(tagsSelectedHtml);
-                    $("#pages").append(pagesHtml);
                 }
             });
             new App();
