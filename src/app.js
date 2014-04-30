@@ -165,6 +165,13 @@ $(document).ready(function() {
                 repo.read("master", "main.json", function(err, data) {
                     $("#loading").hide();
                     var config = JSON.parse(data);
+                    config.posts.sort(function(a, b){
+                        if (a.date > b.date)
+                            return -1;
+                        if (a.date < b.date)
+                            return 1;
+                        return 0;
+                    });
                     gconfig = config;
                     var posts = config.posts;
                     var pages = config.pages;

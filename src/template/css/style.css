@@ -101,3 +101,10 @@ a:hover {
 .tag {
     color: #888;
 }
+.archive {
+    margin: 10px;
+}
+.archive > span {
+	color: #C5C5BD;
+    margin-right: 20px;
+}

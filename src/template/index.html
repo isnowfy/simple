@@ -19,6 +19,9 @@
             <li>
                 <a href="/#/tags">tags</a>
             </li>
+            <li>
+                <a href="/#/archive">archive</a>
+            </li>
         </ul>
     </div>
     <div class="wrap-header">
@@ -61,6 +64,17 @@
         {{/pages}}
     </ul>
 </script>
+<script id="archiveTemplate" type="text/mustache">
+    {{#group}}
+    {{name}}
+    {{#posts}}
+    <div class="archive">
+    <span>{{date}}</span>
+    <a href="{{path}}">{{title}}</a>
+    </div>
+    {{/posts}}
+    {{/group}}
+</script>
 <script id="pagesTemplate" type="text/mustache">
     {{#pages}}
     <li>
@@ -85,6 +99,14 @@ $(document).ready(function() {
         dataType: "json",
         success: function(data) {
             $("#title").html(data.name);
+            data.posts.sort(function(a, b){
+                if (a.date > b.date)
+                    return -1;
+                if (a.date < b.date)
+                    return 1;
+                return 0;
+            });
+            console.log(data.posts);
             var per = data.number_of_posts_per_page;
             var n = data.posts.length;
             var num = Math.floor((n-1)/per)+1;
@@ -113,7 +135,9 @@ $(document).ready(function() {
                 init: function() {
                     this.routes({
                         "/page/:page": function(page) {this.go(page);},
-                        "/tags": function() {this.tags();}
+                        "/tags": function() {this.tags();},
+                        "/tags/:tag": function(param) {this.tag(param);},
+                        "/archive": function() {this.archive();}
                     });
                     Spine.Route.setup();
                 },
@@ -122,7 +146,14 @@ $(document).ready(function() {
                     for (var i = 0; i < pages.length; ++i)
                         pages[i].select = false;
                     pages[page-1].select = true;
-                    itemHtml = itemTemplate.render({"posts": arr[page-1], "pages": pages});
+                    var tmppages = pages;
+                    if (page > 2 && pages.length > 4)
+                        tmppages = pages.slice(page-3);
+                    if (tmppages.length > 5)
+                        tmppages = tmppages.slice(0, 5);
+                    if (pages.length > 4 && tmppages.length < 5)
+                        tmppages = pages.slice(-5);
+                    itemHtml = itemTemplate.render({"posts": arr[page-1], "pages": tmppages});
                     $("#main").html(itemHtml);
                 },
                 tags: function() {
@@ -143,11 +174,42 @@ $(document).ready(function() {
                     tf();
                     var ans = [];
                     for (var k in ts) {
-                        ans.push({"name": k, "size": 100+Math.sqrt(ts[k]-1)*30, "path": "#/tags/"+k});
+                        ans.push({"name": "#"+k, "size": 100+Math.sqrt(ts[k]-1)*30, "path": "#/tags/"+k});
                     }
                     var tagsTemplate = Hogan.compile($("#tagsTemplate").html());
                     var tagsHtml = tagsTemplate.render({"tags": ans});
                     $("#main").html(tagsHtml);
+                },
+                tag: function(param) {
+                    var tag = param.tag;
+                    var group = [{"name": "#"+tag}];
+                    var posts = [];
+                    for (var i = 0; i < data.posts.length; ++i) {
+                        var tmp = data.posts[i].tags.split(" ");
+                        if (tmp.indexOf(tag) != -1)
+                            posts.push(data.posts[i]);
+                    }
+                    group[0].posts = posts;
+                    var tmpTemplate = Hogan.compile($("#archiveTemplate").html());
+                    var tmpHtml = tmpTemplate.render({"group": group});
+                    $("#main").html(tmpHtml);
+                },
+                archive: function() {
+                    var group = [];
+                    var posts = data.posts;
+                    var now = -1;
+                    var name = "";
+                    for (var i = 0; i < posts.length; ++i) {
+                        if (name != posts[i].date.slice(0,4)) {
+                            name = posts[i].date.slice(0,4);
+                            group.push({"name": name, "posts": []});
+                            now++;
+                        }
+                        group[now].posts.push(posts[i]);
+                    }
+                    var tmpTemplate = Hogan.compile($("#archiveTemplate").html());
+                    var tmpHtml = tmpTemplate.render({"group": group});
+                    $("#main").html(tmpHtml);
                 }
             });
             new App();
