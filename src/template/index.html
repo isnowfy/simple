@@ -10,17 +10,17 @@
     <link rel="stylesheet" type="text/css" href="main.css" />
 </head>
 <body>
-<div class="header">
-    <ul id="pages">
-        <li>
-            <a href="/">home</a>
-        </li>
-        <li>
-            <a href="/#/tags">tags</a>
-        </li>
-    </ul>
-</div>
 <div class="main">
+    <div class="header">
+        <ul id="pages">
+            <li>
+                <a href="/">home</a>
+            </li>
+            <li>
+                <a href="/#/tags">tags</a>
+            </li>
+        </ul>
+    </div>
     <div class="wrap-header">
         <h1 id="title">
         </h1>
@@ -47,17 +47,19 @@
         </div>
     </div>
     {{/posts}}
-    <div class="pages">
+    <ul class="pages">
         Pages:
         {{#pages}}
+            <li>
             {{#select}}
-            <span class="selected">{{num}}</span>
+                <span class="selected">{{num}}</span>
             {{/select}}
             {{^select}}
-            <a href="{{path}}">{{num}}</a>
+                <a href="{{path}}">{{num}}</a>
             {{/select}}
+            </li>
         {{/pages}}
-    </div>
+    </ul>
 </script>
 <script id="pagesTemplate" type="text/mustache">
     {{#pages}}

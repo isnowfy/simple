@@ -4,6 +4,12 @@ var repo = null;
 var editor = null;
 var contentpattern = /<!-- content -->\n(.*)\n<!-- content end -->\n/m;
 var pathpattern = /\/\/path\n(.*)\n\/\/path end\n/m;
+Date.prototype.yyyymmdd = function() {
+    var yyyy = this.getFullYear().toString();
+    var mm = (this.getMonth()+1).toString();
+    var dd  = this.getDate().toString();
+    return yyyy + "-" + (mm[1]?mm:"0"+mm[0]) + "-" + (dd[1]?dd:"0"+dd[0]);
+};
 function curry(fn) {
     var args = Array.prototype.slice.call(arguments, 1);
     return function() {
@@ -198,6 +204,7 @@ $(document).ready(function() {
                             $("#postSave").attr("href", "#/posts/savepage");
                             $("#postDelete").attr("href", "#/posts");
                         }
+                        $("#postdate").val((new Date()).yyyymmdd());
                         editor = new Pen("#editContent");
                     }
                     if (now != null) {

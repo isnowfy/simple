@@ -1,9 +1,8 @@
 body {
 	margin: 0;
-    font-family: "Galdeano","Hiragino Sans GB","Microsoft YaHei",Trebuchet,"Trebuchet MS",Tahoma,"Lucida Grande","Lucida Sans Unicode",Verdana,sans-serif;
+    font-family: Georgia, serif;
 }
 .main {
-	overflow: hidden;
 	margin: 0 auto;
 	width: 600px;
     position: relative;
@@ -15,14 +14,14 @@ body {
     padding: 20px 0 10px 0;
 	border-bottom: 2px dashed #888;
     margin: 0 0 10px;
+    font-family: "Comic Sans MS", cursive, sans-serif;
 }
 .header {
-	margin-top: 60px;
+	margin: 70px 0 0 -210px;
     width: 140px;
-    position: absolute;
     float: left;
     text-align: right;
-    font-family: "Electrolize",sans-serif;
+    font-family: Verdana, Geneva, sans-serif;
 }
 .header li {
 	list-style: none;
@@ -57,11 +56,11 @@ a:hover {
 .date {
 	float: left;
 	color: #C5C5BD;
-	font-size: 13px;
+	font-size: 17px;
 	text-transform: uppercase;
 	font-weight: bold;
-	width: 160px;
-	padding: 17px 0 0;
+	width: 140px;
+	padding: 16px 0 0;
 }
 .title {
 	padding: 0;
@@ -74,7 +73,6 @@ a:hover {
 .title h2 {
 	font-size: 17px;
 	line-height: 25px;
-	font-weight: bold;
 }
 .footer {
 	border-top: 1px dotted #888;
@@ -84,16 +82,21 @@ a:hover {
 }
 .pages {
 	text-align: center;
-	margin-bottom: 20px;
-}
-.pages a, .pages span{
-	margin: 0 4px;
-	padding: 5px 10px;
-	border: 1px solid #eee;
-	border-radius: 4px;
+	margin: 25px 25px 35px;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
 .pages a:hover{
 	border: 1px solid #E93071;
+	border-radius: 4px;
+}
+.pages > li {
+	margin: 0 4px;
+    display: inline;
+}
+.pages > li > a, .pages > li > span {
+    padding: 3px 10px;
+	border: 1px solid #eee;
+	border-radius: 4px;
 }
 .tag {
     color: #888;
