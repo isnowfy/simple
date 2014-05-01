@@ -1,6 +1,7 @@
 {
 "name": "isnowfy",
 "number_of_posts_per_page": 7,
+"disqus_shortname": "",
 "posts": [
         {
         "title": "title tile tile tile",
