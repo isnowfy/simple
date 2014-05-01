@@ -233,7 +233,7 @@ $(document).ready(function() {
                         repo.read("master", now.path, function(err, data) {
                             $("#loading").hide();
                             var content = data.match(contentpattern)[1];
-                            var md = date.match(mdpattern)[1];
+                            var md = data.match(mdpattern)[1];
                             $("#editmd").val(md);
                             $("#edithtml").html(content);
                         });
