@@ -163,6 +163,8 @@ $(document).ready(function() {
                         for (var i = 0; i < posts.length; ++i) {
                             var tmp = posts[i].tags.split(" ");
                             for (var j = 0; j < tmp.length; ++j) {
+                                if (tmp[j].length == 0)
+                                    continue;
                                 if (!(tmp[j] in ts))
                                     ts[tmp[j]] = 0;
                                 ts[tmp[j]]++;
