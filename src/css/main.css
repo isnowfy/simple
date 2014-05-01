@@ -129,9 +129,9 @@ body {
 }
 
 .page-header {
-    padding-bottom: 9px;
-    margin: 0 0 20px;
-    border-bottom: 1px solid #eee;
+    padding: 9px;
+    margin: 0;
+    border-bottom: 0;
 }    
 
 .post-content {
@@ -142,4 +142,45 @@ body {
 .nav-btn {
     margin: 10px 30px;
     width: 70%;
+}
+
+html, body, .container, #views, #posts, .row, .post-content {
+    height: 100%;
+}
+
+#editContent {
+    top: 100px;
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+    border-top: 1px solid #eee;
+}
+
+#editmd {
+    width: 50%;
+    height: 100%;
+    position: relative;
+    float: left;
+    display: block;
+    margin: 0;
+    border: 0;
+    resize: none;
+    padding: 16px;
+    border-right: 1px solid #d9d9d9;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+#edithtml {
+    width: 50%;
+    height: 100%;
+    float: right;
+    display: block;
+    margin: 0;
+    background-color: #fcfaf2;
+    overflow-y: auto;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }

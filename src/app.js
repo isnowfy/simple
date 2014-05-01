@@ -4,12 +4,23 @@ var repo = null;
 var editor = null;
 var contentpattern = /<!-- content -->\n([\s\S]*)\n<!-- content end -->\n/m;
 var pathpattern = /\/\/path\n([\s\S]*)\n\/\/path end\n/m;
+var mdpattern = /<!-- markdown -->\n([\s\S]*)\n<!-- markdown end -->\n/m;
 Date.prototype.yyyymmdd = function() {
     var yyyy = this.getFullYear().toString();
     var mm = (this.getMonth()+1).toString();
     var dd  = this.getDate().toString();
     return yyyy + "-" + (mm[1]?mm:"0"+mm[0]) + "-" + (dd[1]?dd:"0"+dd[0]);
 };
+function mdupdate() {
+    var converter = new Showdown.converter();
+    var tmp = $("#editmd").val();
+    tmp = tmp.replace(/~~~~\{(.*)\}\n([\s\S]*)~~~~\n/m, "<pre><code class=\"language-$1\">$2</code></pre>");
+    tmp = tmp.replace(/~~~~\n([\s\S]*)~~~~\n/m, "<pre><code>$1</code></pre>");
+    tmp = converter.makeHtml(tmp);
+    $("#edithtml").html(tmp);
+    Prism.highlightAll();
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, "edithtml"]);
+}
 function curry(fn) {
     var args = Array.prototype.slice.call(arguments, 1);
     return function() {
@@ -212,7 +223,6 @@ $(document).ready(function() {
                             $("#postDelete").attr("href", "#/posts");
                         }
                         $("#postdate").val((new Date()).yyyymmdd());
-                        editor = new Pen("#editContent");
                     }
                     if (now != null) {
                         $("#posttitle").val(now.title);
@@ -223,8 +233,9 @@ $(document).ready(function() {
                         repo.read("master", now.path, function(err, data) {
                             $("#loading").hide();
                             var content = data.match(contentpattern)[1];
-                            $("#editContent").html(content);
-                            editor = new Pen("#editContent");
+                            var md = date.match(mdpattern)[1];
+                            $("#editmd").val(md);
+                            $("#edithtml").html(content);
                         });
                     }
                 });
@@ -300,13 +311,15 @@ $(document).ready(function() {
                             posts[mark] = now;
                         else
                             posts.push(now);
-                        var content = $("#editContent").html();
+                        var content = $("#edithtml").html();
+                        var md = $("#editmd").val();
                         $.ajax({
                             url: template, 
                             type: "GET",
                             success: function(data) {
                                 data = data.replace(contentpattern, "<!-- content -->\n"+content+"\n<!-- content end -->\n");
                                 data = data.replace(pathpattern, "//path\nvar path=\""+now.path+"\";\n//path end\n");
+                                data = data.replace(mdpattern, "<!-- markdown -->\n"+md+"\n<!-- markdown end -->\n");
                                 repo.write("master", now.path, data, "simple", function(err) {
                                     repo.write("master", "main.json", JSON.stringify(gconfig), "simple", function(err) {
                                         temp.posts.init(param);
@@ -329,4 +342,7 @@ $(document).ready(function() {
         }
     });
     new SimpleApp();
+    $("#editmd").on("keyup", function() {
+        mdupdate();
+    });
 });

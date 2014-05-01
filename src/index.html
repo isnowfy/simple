@@ -5,8 +5,9 @@
     <title>Simple</title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/loading.css">
-    <link rel="stylesheet" type="text/css" href="css/pen.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="template/css/entry.css">
+    <link rel="stylesheet" type="text/css" href="template/css/prism.css">
     <script src="lib/jquery.js"></script>
     <script src="lib/underscore.js"></script>
     <script src="lib/base64.js"></script>
@@ -14,8 +15,10 @@
     <script src="lib/spine.js"></script>
     <script src="lib/route.js"></script>
     <script src="lib/manager.js"></script>
-    <script src="lib/pen.js"></script>
     <script src="template/js/hogan.min.js"></script>
+    <script src="lib/showdown.js"></script>
+    <script src="template/js/prism.js"></script>
+    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
     <script src="app.js"></script>
 
@@ -88,7 +91,8 @@
                     </div>
                 </div>
                 <div id="editContent">
-                    You can directly write your content here!
+                    <textarea id="editmd"></textarea>
+                    <div id="edithtml" class="entry"></div>
                 </div>
             </div>
         </div>
@@ -112,5 +116,8 @@
     <a href="#/posts/{{type}}/{{num}}">{{title}}</a>
 </li>
 {{/items}}
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ["\\(", "\\)"]], processEscapes: true } });
 </script>
 </body>
