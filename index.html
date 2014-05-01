@@ -1,79 +1,123 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
-
-  <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Simple : A static blog generator with a static page" />
-
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
+<head>
+    <meta charset="utf-8">
     <title>Simple</title>
-  </head>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/loading.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="template/css/entry.css">
+    <link rel="stylesheet" type="text/css" href="template/css/prism.css">
+    <script src="lib/jquery.js"></script>
+    <script src="lib/underscore.js"></script>
+    <script src="lib/base64.js"></script>
+    <script src="lib/github.js"></script>
+    <script src="lib/spine.js"></script>
+    <script src="lib/route.js"></script>
+    <script src="lib/manager.js"></script>
+    <script src="template/js/hogan.min.js"></script>
+    <script src="lib/showdown.js"></script>
+    <script src="template/js/prism.js"></script>
+    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
-  <body>
+    <script src="app.js"></script>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/isnowfy/simple">View on GitHub</a>
-
-          <h1 id="project_title">Simple</h1>
-          <h2 id="project_tagline">A static blog generator with a static page</h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/isnowfy/simple/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/isnowfy/simple/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
+</head>
+<body>
+<div class="container">
+<div id="views">
+    <div id="login">
+        <a id="fork" href="https://github.com/isnowfy/simple" target="_blank"><img src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label>Github username</label>
+                <div>
+                    <input type="text" name="user" class="form-control" id="loginuser">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <div>
+                    <input type="password" name="pass" class="form-control" id="loginpass">
+                </div>
+            </div>
+            <div class="form-group">
+                <div>
+                    <input type="submit" class="btn btn-default" value="Sign in" id="loginsubmit">
+                    <span class="label label-danger" id="loginerror" style="display: none;">Something error!</span>
+                </div>
+            </div>
+        </form>
     </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
-
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
-
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
-
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
-
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
-
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
-
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
-
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
-
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-      </section>
+    <div id="main">
+        <div class="block">
+        <h2>Create a repository</h2>
+        <p>Head over to <a href="https://github.com">GitHub</a> and <a href="https://github.com/new">create a new repository</a> named username.github.io, where username is your username on GitHub.(Please selected the "<span style="color:red">Initialize this repository with a README</span>" when creating the repo.)</p>
+        </div>
+        <div class="block">
+        <h2>Initialize the repository</h2>
+        <p><a class="btn btn-primary" id="init">Initialize</a></p>
+        <p><span class="label label-danger" id="initerror" style="display: none;">Error! Please try again!</span></p>
+        <p><span class="label label-success" id="initok" style="display: none;">Initialzition has completed!</span></p>
+        </div>
+        <div class="block">
+        <h2>Go to write</h2>
+        <p>If you had initialized the repository you can go to next page directly.</p>
+        <p><a class="btn btn-primary" id="go">Go</a></p>
+        </div>
+        </p>
     </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Simple maintained by <a href="https://github.com/isnowfy">isnowfy</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
+    <div id="posts" class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-md-3 sidebar">
+                <a class="nav-btn btn btn-default" href="#/posts/newpost">New post</a>
+                <ul class="nav nav-sidebar" id="postItems">
+                </ul>
+                <a class="nav-btn btn btn-default" href="#/posts/newpage">New page</a>
+                <ul class="nav nav-sidebar" id="pageItems">
+                </ul>
+            </div>
+            <div class="post-content col-sm-9 col-sm-offset-3 col-md-9 col-md-offset-3">
+                <div class="page-header">
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="posttitle" placeholder="Title">
+                            <input type="text" class="form-control" id="postpath" placeholder="Url ike intro.html">
+                            <input type="text" class="form-control" id="postdate" placeholder="2014-02-01">
+                            <input type="text" class="form-control" id="posttags" placeholder="Tags split with space">
+                            <a class="btn btn-default" href="#" id="postSave">save</a>
+                            <a class="btn btn-danger" href="#" id="postDelete">delete</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="editContent">
+                    <textarea id="editmd"></textarea>
+                    <div id="edithtml" class="entry"></div>
+                </div>
+            </div>
+        </div>
     </div>
-
-    
-
-  </body>
-</html>
+</div>
+<div id="loading" style="display: none;">
+    <div class="spinner">
+        <div class="dot1"></div>
+        <div class="dot2"></div>
+    </div>
+</div>
+</div>
+<script id="postsItem" type="text/mustache">
+{{#items}}
+{{#active}}
+<li class="nav-active">
+{{/active}}
+{{^active}}
+<li>
+{{/active}}
+    <a href="#/posts/{{type}}/{{num}}">{{title}}</a>
+</li>
+{{/items}}
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ["\\(", "\\)"]], processEscapes: true } });
+</script>
+</body>
