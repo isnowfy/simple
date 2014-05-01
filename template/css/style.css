@@ -16,6 +16,9 @@ body {
     margin: 0 0 10px;
     font-family: "Comic Sans MS", cursive, sans-serif;
 }
+#title:hover {
+    border: 0;
+}
 .header {
 	margin: 70px 0 0 -210px;
     width: 140px;

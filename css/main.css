@@ -148,12 +148,24 @@ html, body, .container, #views, #posts, .row, .post-content {
     height: 100%;
 }
 
+.post-content {
+    display: table;
+}
+
+.post-wrap-header {
+    display: table-row;
+}
+
+.post-wrap-edit {
+    display: table-row;
+    height: 100%;
+}
+
 #editContent {
-    top: 100px;
-    bottom: 0;
-    position: absolute;
+    height: 100%;
     width: 100%;
     border-top: 1px solid #eee;
+    overflow-y: auto;
 }
 
 #editmd {
