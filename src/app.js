@@ -72,7 +72,7 @@ function asyncWrite(data, target, err, finish) {
     repo.write("master", target, data, "simple",
                function(e) {
                    var ret = err(e);
-                   if (ret != false)
+                   if (ret == false)
                        finish();
                 });
 }
@@ -175,6 +175,12 @@ $(document).ready(function() {
                 $("#loading").show();
                 repo.read("master", "main.json", function(err, data) {
                     $("#loading").hide();
+                    $("#posttitle").val("");
+                    $("#postpath").val("");
+                    $("#postdate").val("");
+                    $("#posttags").val("");
+                    $("#editmd").val("");
+                    $("#edithtml").html("");
                     var config = JSON.parse(data);
                     config.posts.sort(function(a, b){
                         if (a.date > b.date)
