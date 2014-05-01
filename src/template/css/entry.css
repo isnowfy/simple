@@ -6,13 +6,13 @@ body{padding:0;margin:0}
 .entry>img,.entry>video{margin-top:16px;margin-bottom:16px;display:block}
 .entry h1,.entry h2,.entry h3,.entry h4,.entry h5,.entry h6{margin-top:0;margin-bottom:0;padding:0}.entry h1:first-child,.entry h2:first-child,.entry h3:first-child,.entry h4:first-child,.entry h5:first-child,.entry h6:first-child{margin-top:0}
 .entry>h3,.entry>h4,.entry>h5,.entry>h6{margin-top:32px}.entry>h3+*,.entry>h4+*,.entry>h5+*,.entry>h6+*{margin-top:0}
-.entry>h1,.entry>h2{margin-top:64px}.entry>h1+*,.entry>h2+*{margin-top:0}
+.entry>h1,.entry>h2{margin:24px 0 5px}.entry>h1+*,.entry>h2+*{margin-top:0}
 .entry h1,.entry h2,.entry h3,.entry h4,.entry h5,.entry h6{font-weight:inherit}
 .entry h1,.entry h2{color:#424b50;background-color:transparent}.entry h1 a,.entry h2 a{color:#424b50}
 .entry h1 a,.entry h2 a,.entry h1 em,.entry h2 em,.entry h1 u,.entry h2 u,.entry h1 abbr[title],.entry h2 abbr[title]{border-bottom-color:#424b50}
 .entry h3 a,.entry h4 a,.entry h5 a,.entry h6 a{color:#424b50;border-bottom-color:#424b50}
-.entry h1{font-size:28px;line-height:48px;text-align:center}
-.entry h2{font-size:21px;line-height:32px;text-align:center}
+.entry h1{font-size:28px;line-height:48px;text-align:center;font-weight:bold}
+.entry h2{font-size:21px;line-height:32px;font-weight:bold}
 .entry h3{font-size:18px;line-height:32px;text-align:left}
 .entry h4,.entry h5,.entry h6{line-height:32px;font-size:16px;text-align:left}
 .entry blockquote{position:relative;padding:32px 64px}
