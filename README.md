@@ -22,7 +22,7 @@ With simple and github pages you can easily create your static blog. Here is wha
 
 If you want use your own custom domain, you can modify the `CNAME` file.(see [here](https://help.github.com/articles/setting-up-a-custom-domain-with-github-pages)).
 
-If you want use disqus comment system, you can modify the `main.json` file, and change `disqus_shortname=""` to `disqus_shortname="your_shaortname"`.
+If you want use disqus comment system, you can modify the `main.json` file, and change `disqus_shortname=""` to `disqus_shortname="your_shortname"`.
 
 ##Features
 
