@@ -316,7 +316,7 @@ $(document).ready(function() {
                         if (mark != null)
                             posts[mark] = now;
                         else
-                            posts.push(now);
+                            posts.unshift(now);
                         var content = $("#edithtml").html();
                         var md = $("#editmd").val();
                         $.ajax({
