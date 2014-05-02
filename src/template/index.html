@@ -137,7 +137,7 @@ $(document).ready(function() {
                     this.routes({
                         "/page/:page": function(page) {this.go(page);},
                         "/tags": function() {this.tags();},
-                        "/tags/:tag": function(param) {this.tag(param);},
+                        "/tag/:tag": function(param) {this.tag(param);},
                         "/archive": function() {this.archive();}
                     });
                     Spine.Route.setup();
@@ -177,7 +177,7 @@ $(document).ready(function() {
                     tf();
                     var ans = [];
                     for (var k in ts) {
-                        ans.push({"name": "#"+k, "size": 100+Math.sqrt(ts[k]-1)*30, "path": "#/tags/"+k});
+                        ans.push({"name": "#"+k, "size": 100+Math.sqrt(ts[k]-1)*30, "path": "#/tag/"+k});
                     }
                     var tagsTemplate = Hogan.compile($("#tagsTemplate").html());
                     var tagsHtml = tagsTemplate.render({"tags": ans});
@@ -191,6 +191,11 @@ $(document).ready(function() {
                         var tmp = data.posts[i].tags.split(" ");
                         if (tmp.indexOf(tag) != -1)
                             posts.push(data.posts[i]);
+                    }
+                    for (var i = 0; i < data.pages.length; ++i) {
+                        var tmp = data.pages[i].tags.split(" ");
+                        if (tmp.indexOf(tag) != -1)
+                            posts.push(data.pages[i]);
                     }
                     group[0].posts = posts;
                     var tmpTemplate = Hogan.compile($("#archiveTemplate").html());

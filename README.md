@@ -1,6 +1,6 @@
 #simple
 
-Simple is a static blog generator with a single static page. You can write you blog in the static web page, and it will generate the static blog at your username.github.io project with the [github pages](https://pages.github.com/).
+Simple is a static blog generator with a single static page. You can write you blog online, and it will generate static html files at your repo named `username.github.io` which is supported by [github pages](https://pages.github.com)
 
 ##Demo
 
@@ -12,20 +12,25 @@ Simple is a static blog generator with a single static page. You can write you b
 
 ##Usage
 
-With simple and github pages you can easily create your static blog. Here is what you need do.
+With simple and github pages you can easily create your static blog. Here is what you need to do.
 
-1. Create a github account.
-2. Create a project. (Details is [here](https://pages.github.com/). you need create the username.github.io project, username is your github username, and create the project with initalizing with a README.)
-3. Browse [simple](http://isnowfy.github.io/simple) and initalize you username.github.io project.
-4. Write your markdown blog.
+1. Create github account.
+2. Create a repo named `your_user_name.github.io` (remember to check `Initilize and create README`).
+3. Sign in [simple](http://isnowfy.github.io/simple) with your github account.
+4. Click `Initilize` to set up basic file for your static blog site.
+5. Click `Go` and start writing.
+
+If you want use your own custom domain, you can modify the `CNAME` file.(see [here](https://help.github.com/articles/setting-up-a-custom-domain-with-github-pages)).
+
+If you want use disqus comment system, you can modify the `main.json` file, and change `disqus_shortname=""` to `disqus_shortname="your_shaortname"`.
 
 ##Features
 
-* simple, no backend need
-* static blog
-* markdown editor
-* code highlight support
-* latex math symbol support
+* Simple, no backend need
+* Static blog
+* Markdown editor
+* Code highlight support
+* Tex formula support
 
 ##Custom
 
@@ -33,7 +38,7 @@ The template files are at `/src/template`, so you can modify the template files 
 
 ##Todo
 
-search, sitemap, rss
+Search, Sitemap, Rss
 
 ##License
 

@@ -3,7 +3,7 @@ var gconfig = null;
 var repo = null;
 var editor = null;
 var contentpattern = /<!-- content -->\n([\s\S]*)\n<!-- content end -->\n/m;
-var pathpattern = /\/\/path\n([\s\S]*)\n\/\/path end\n/m;
+var pathpattern = /\/\/path\nvar path=\"(.*)\";\n\/\/path end\n/m;
 var mdpattern = /<!-- markdown -->\n([\s\S]*)\n<!-- markdown end -->\n/m;
 Date.prototype.yyyymmdd = function() {
     var yyyy = this.getFullYear().toString();
@@ -324,7 +324,7 @@ $(document).ready(function() {
                             type: "GET",
                             success: function(data) {
                                 data = data.replace(contentpattern, "<!-- content -->\n"+content+"\n<!-- content end -->\n");
-                                data = data.replace(pathpattern, "//path\nvar path=\""+now.path+"\";\n//path end\n");
+                                data = data.replace("//path//", now.path);
                                 data = data.replace(mdpattern, "<!-- markdown -->\n"+md+"\n<!-- markdown end -->\n");
                                 repo.write("master", now.path, data, "simple", function(err) {
                                     repo.write("master", "main.json", JSON.stringify(gconfig), "simple", function(err) {
