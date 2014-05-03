@@ -323,13 +323,16 @@ $(document).ready(function() {
                             url: template, 
                             type: "GET",
                             success: function(data) {
+                                $("#saveerror").hide();
                                 data = data.replace(contentpattern, "<!-- content -->\n"+content+"\n<!-- content end -->\n");
                                 data = data.replace("//path//", now.path);
                                 data = data.replace(mdpattern, "<!-- markdown -->\n"+md+"\n<!-- markdown end -->\n");
                                 repo.write("master", now.path, data, "simple", function(err) {
                                     repo.write("master", "main.json", JSON.stringify(gconfig), "simple", function(err) {
-                                        temp.posts.init(param);
-                                        temp.posts.active();
+                                        if (!errShow($("saveerror", err))) {
+                                            temp.posts.init(param);
+                                            temp.posts.active();
+                                        }
                                     });    
                                 });
                             },
