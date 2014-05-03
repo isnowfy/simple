@@ -17,8 +17,10 @@ With simple and github pages you can easily create your static blog. Here is wha
 1. Create github account.
 2. Create a repo named `your_user_name.github.io` (remember to check `Initilize and create README`).
 3. Sign in [simple](http://isnowfy.github.io/simple) with your github account.
-4. Click `Initilize` to set up basic file for your static blog site.
+4. Click `Initilize` to set up basic file for your static blog site.(maybe a little slow)
 5. Click `Go` and start writing.
+6. Click `New post` to create a new post and when finish writing click `save` to generate the static page.
+7. Now you can browse the `your_user_name.github.io` site and enjoy it!
 
 ![simple](http://isnowfy.github.io/img/Simple.png)
 
@@ -26,7 +28,7 @@ With simple and github pages you can easily create your static blog. Here is wha
 
 * You can use disqus comment system, just modify the `main.json` file, and change `disqus_shortname=""` to `disqus_shortname="your_shortname"`.
 
-* You can use your own custom domain, just modify the `CNAME` file.(see [also](https://help.github.com/articles/setting-up-a-custom-domain-with-github-pages)).
+* You can use your own custom domain, just modify the `CNAME` file.(see [also](https://help.github.com/articles/setting-up-a-custom-domain-with-github-pages))
 
 ##Features
 
