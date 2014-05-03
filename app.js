@@ -145,7 +145,7 @@ $(document).ready(function() {
             var a1 = curry(asyncWriteFile, "template/index.html", "index.html", error);
             var a2 = curry(asyncWriteFile, "template/main.css", "main.css", error);
             var a3 = curry(asyncWriteFile, "template/main.js", "main.js", error);
-            var config = {"name": global.user, "number_of_posts_per_page": 5, "disqus_shortname": "", "posts": [], "pages": []};
+            var config = {"name": global.user, "number_of_posts_per_page": 7, "disqus_shortname": "", "posts": [], "pages": []};
             var a4 = curry(asyncWrite, JSON.stringify(config), "main.json", error);
             var a5 = curry(asyncWrite, "", "CNAME", error);
             syncSeq(function() {$("#initok").show()}, a1, a2, a3, a4, a5);
