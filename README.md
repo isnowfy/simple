@@ -1,22 +1,22 @@
-#simple
+#Simple
 
 Simple is a static blog generator with a single static page. You can write you blog online, and it will generate static html files at your repo named `username.github.io` which is supported by [github pages](https://pages.github.com)
 
 ##Demo
 
-[simple](http://isnowfy.github.io/simple)
+[Simple](http://isnowfy.github.io/simple)
 
-[blog demo](http://isnowfy.github.io/)
+[Blog demo](http://isnowfy.github.io/)
 
-[lightweight markdown editor](http://isnowfy.github.io/simple/editor.html)
+[Lightweight markdown editor](http://isnowfy.github.io/simple/editor.html)
 
 ##Usage
 
-With simple and github pages you can easily create your static blog. Here is what you need to do.
+With Simple and github pages you can easily create your static blog. Here is what you need to do.
 
 1. Create github account.
 2. Create a repo named `your_user_name.github.io` (remember to check `Initilize and create README`).
-3. Sign in [simple](http://isnowfy.github.io/simple) with your github account.
+3. Sign in [Simple](http://isnowfy.github.io/simple) with your github account.
 4. Click `Initilize` to set up basic files for your static blog site.(maybe a little slow)
 5. Click `Go` and start writing.
 6. Click `New post` to create a new post and when finish writing click `save` to generate the static page.
