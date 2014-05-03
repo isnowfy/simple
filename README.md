@@ -22,9 +22,11 @@ With simple and github pages you can easily create your static blog. Here is wha
 
 ![simple](http://isnowfy.github.io/img/Simple.png)
 
-If you want use your own custom domain, you can modify the `CNAME` file.(see [here](https://help.github.com/articles/setting-up-a-custom-domain-with-github-pages)).
+* You can use your own blog name, just modify the `main.json` file, and change `name="username"`.
 
-If you want use disqus comment system, you can modify the `main.json` file, and change `disqus_shortname=""` to `disqus_shortname="your_shortname"`.
+* You can use disqus comment system, just modify the `main.json` file, and change `disqus_shortname=""` to `disqus_shortname="your_shortname"`.
+
+* You can use your own custom domain, just modify the `CNAME` file.(see [also](https://help.github.com/articles/setting-up-a-custom-domain-with-github-pages)).
 
 ##Features
 
