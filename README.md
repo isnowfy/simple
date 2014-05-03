@@ -40,7 +40,7 @@ The template files are at `/src/template`, so you can modify the template files 
 
 ##Todo
 
-Search, Sitemap, Rss
+Enhance error display, Search, Sitemap, Rss
 
 ##License
 
