@@ -1,0 +1,232 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="Keywords" content="blog"/>
+    <meta name="Description" content="blog"/>
+    <title>Simple</title>
+    <link rel="shortcut icon" href="/static/favicon.png"/>
+    <link rel="stylesheet" type="text/css" href="main.css" />
+</head>
+<body>
+<div class="main">
+    <div class="header">
+        <ul id="pages">
+            <li>
+                <a href="/">home</a>
+            </li>
+            <li>
+                <a href="/#/tags">tags</a>
+            </li>
+            <li>
+                <a href="/#/archive">archive</a>
+            </li>
+        </ul>
+    </div>
+    <div class="wrap-header">
+        <h1>
+        <a href="/" id="title"></a>
+        </h1>
+    </div>
+    <div class="innermain" id="main">
+    </div>
+    <div class="footer">
+        <p>© Copyright 2014 by isnowfy, Designed by isnowfy</p>
+    </div>
+</div>
+<script src="main.js"></script>
+<script id="itemTemplate" type="text/mustache">
+    {{#posts}}
+    <div class="item">
+        <div class="date">
+            <div class="little">
+            </div>
+            {{date}}
+        </div>
+        <div class="title">
+            <h2>
+                <a href="{{path}}">{{title}}</a>
+            </h2>
+        </div>
+    </div>
+    {{/posts}}
+    <ul class="pages">
+        Pages:
+        {{#pages}}
+            <li>
+            {{#select}}
+                <span class="selected">{{num}}</span>
+            {{/select}}
+            {{^select}}
+                <a href="{{path}}">{{num}}</a>
+            {{/select}}
+            </li>
+        {{/pages}}
+    </ul>
+</script>
+<script id="archiveTemplate" type="text/mustache">
+    {{#group}}
+    {{name}}
+    {{#posts}}
+    <div class="archive">
+    <span>{{date}}</span>
+    <a href="{{path}}">{{title}}</a>
+    </div>
+    {{/posts}}
+    {{/group}}
+</script>
+<script id="pagesTemplate" type="text/mustache">
+    {{#pages}}
+    <li>
+        <a href="{{path}}">{{title}}</a>
+    </li>
+    {{/pages}}
+</script>
+<script id="tagsTemplate" type="text/mustache">
+    <ul style="list-style: none">
+        {{#tags}}
+        <li style="display:inline; margin: 15px;">
+            <a href="{{path}}" style="font-size: {{size}}%">{{name}}</a>
+        </li>
+        {{/tags}}
+    </ul>
+</script>
+<script>
+$(document).ready(function() {
+    $.ajax({
+        url: "main.json",
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+            $("#title").html(data.name);
+            data.posts.sort(function(a, b){
+                if (a.date > b.date)
+                    return -1;
+                if (a.date < b.date)
+                    return 1;
+                return 0;
+            });
+            console.log(data.posts);
+            var per = data.number_of_posts_per_page;
+            var n = data.posts.length;
+            var num = Math.floor((n-1)/per)+1;
+            var arr = [];
+            var tmp = [];
+            for (var i = 0; i < n; ++i) {
+                if (i != 0 && i % per == 0) {
+                    arr.push(tmp)
+                    tmp = [];
+                }
+                tmp.push(data.posts[i]);
+            }
+            if (tmp.length > 0)
+                arr.push(tmp);
+            var pages = [{"select": true, "num": 1, "path": "#/page/1"}];
+            for (var i = 1; i < num; ++i)
+                pages.push({"select": false, "num": i+1, "path": "#/page/"+(i+1)});
+            var itemTemplate = Hogan.compile($("#itemTemplate").html());
+            var itemHtml = itemTemplate.render({"posts": arr[0], "pages": pages});
+            $("#main").html(itemHtml);
+            var pagesTemplate = Hogan.compile($("#pagesTemplate").html());
+            var pagesHtml = pagesTemplate.render({"pages": data.pages});
+            $("#pages").append(pagesHtml);
+            var App = Spine.Controller.sub({
+                el: $("#main"),
+                init: function() {
+                    this.routes({
+                        "/page/:page": function(page) {this.go(page);},
+                        "/tags": function() {this.tags();},
+                        "/tag/:tag": function(param) {this.tag(param);},
+                        "/archive": function() {this.archive();}
+                    });
+                    Spine.Route.setup();
+                },
+                go: function(page) {
+                    page = Math.floor(page.page);
+                    for (var i = 0; i < pages.length; ++i)
+                        pages[i].select = false;
+                    pages[page-1].select = true;
+                    var tmppages = pages;
+                    if (page > 2 && pages.length > 4)
+                        tmppages = pages.slice(page-3);
+                    if (tmppages.length > 5)
+                        tmppages = tmppages.slice(0, 5);
+                    if (pages.length > 4 && tmppages.length < 5)
+                        tmppages = pages.slice(-5);
+                    itemHtml = itemTemplate.render({"posts": arr[page-1], "pages": tmppages});
+                    $("#main").html(itemHtml);
+                },
+                tags: function() {
+                    var ts = {};
+                    var posts = data.posts;
+                    var tf = function() {
+                        for (var i = 0; i < posts.length; ++i) {
+                            var tmp = posts[i].tags.split(" ");
+                            for (var j = 0; j < tmp.length; ++j) {
+                                if (tmp[j].length == 0)
+                                    continue;
+                                if (!(tmp[j] in ts))
+                                    ts[tmp[j]] = 0;
+                                ts[tmp[j]]++;
+                            }
+                        }
+                    }
+                    tf();
+                    posts = data.pages;
+                    tf();
+                    var ans = [];
+                    for (var k in ts) {
+                        ans.push({"name": "#"+k, "size": 100+Math.sqrt(ts[k]-1)*30, "path": "#/tag/"+k});
+                    }
+                    var tagsTemplate = Hogan.compile($("#tagsTemplate").html());
+                    var tagsHtml = tagsTemplate.render({"tags": ans});
+                    $("#main").html(tagsHtml);
+                },
+                tag: function(param) {
+                    var tag = param.tag;
+                    var group = [{"name": "#"+tag}];
+                    var posts = [];
+                    for (var i = 0; i < data.posts.length; ++i) {
+                        var tmp = data.posts[i].tags.split(" ");
+                        if (tmp.indexOf(tag) != -1)
+                            posts.push(data.posts[i]);
+                    }
+                    for (var i = 0; i < data.pages.length; ++i) {
+                        var tmp = data.pages[i].tags.split(" ");
+                        if (tmp.indexOf(tag) != -1)
+                            posts.push(data.pages[i]);
+                    }
+                    group[0].posts = posts;
+                    var tmpTemplate = Hogan.compile($("#archiveTemplate").html());
+                    var tmpHtml = tmpTemplate.render({"group": group});
+                    $("#main").html(tmpHtml);
+                },
+                archive: function() {
+                    var group = [];
+                    var posts = data.posts;
+                    var now = -1;
+                    var name = "";
+                    for (var i = 0; i < posts.length; ++i) {
+                        if (name != posts[i].date.slice(0,4)) {
+                            name = posts[i].date.slice(0,4);
+                            group.push({"name": name, "posts": []});
+                            now++;
+                        }
+                        group[now].posts.push(posts[i]);
+                    }
+                    var tmpTemplate = Hogan.compile($("#archiveTemplate").html());
+                    var tmpHtml = tmpTemplate.render({"group": group});
+                    $("#main").html(tmpHtml);
+                }
+            });
+            new App();
+        },
+        error: function(e) {
+            console.log("init error");
+        }
+    });    
+});
+</script>
+</body>
+</html>
