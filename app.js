@@ -317,8 +317,8 @@ $(document).ready(function() {
                             posts[mark] = now;
                         else
                             posts.unshift(now);
-                        var content = $("#edithtml").html();
-                        var md = $("#editmd").val();
+                        var content = $("#edithtml").html().replace(/\$/mg, "$$$$");
+                        var md = $("#editmd").val().replace(/\$/mg, "$$$$");
                         $.ajax({
                             url: template, 
                             type: "GET",
