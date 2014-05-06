@@ -1,0 +1,113 @@
+body {
+	margin: 0;
+    font-family: Georgia, serif;
+}
+.main {
+	margin: 0 auto;
+	width: 600px;
+    position: relative;
+}
+.wrap-header h1 {
+    width: 100%;
+    height: 40px;
+	color: #E93071;
+    padding: 20px 0 10px 0;
+	border-bottom: 2px dashed #888;
+    margin: 0 0 10px;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
+#title:hover {
+    border: 0;
+}
+.header {
+	margin: 70px 0 0 -210px;
+    width: 140px;
+    float: left;
+    text-align: right;
+    font-family: Verdana, Geneva, sans-serif;
+}
+.header li {
+	list-style: none;
+	text-transform: uppercase;
+	margin: 30px 0;
+}
+.header a {
+    color: black;
+}
+a {
+	text-decoration: none;
+	color: #E93071;
+}
+a:hover {
+	border-bottom: 1px solid #E93071;
+}
+.selected {
+	color: black;
+}
+.item {
+	margin: 10px 0;
+	padding: 1px 0;
+}
+.little {
+	float: left;
+	margin-right: 10px;
+	width: 3px;
+	height: 30px;
+	border-radius: 4px;
+	background: #C5C5BD;
+}
+.date {
+	float: left;
+	color: #C5C5BD;
+	font-size: 17px;
+	text-transform: uppercase;
+	font-weight: bold;
+	width: 140px;
+	padding: 16px 0 0;
+}
+.title {
+	padding: 0;
+	margin: 0 0 0 140px;
+}
+.title a:hover {
+	padding-bottom: 2px;
+	border-bottom: 1px solid #E93071;
+}
+.title h2 {
+	font-size: 17px;
+	line-height: 25px;
+}
+.footer {
+	border-top: 1px dotted #888;
+	margin-top: 20px;
+	text-align: center;
+	color: #555;
+}
+.pages {
+	text-align: center;
+	margin: 25px 25px 35px;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+.pages a:hover{
+	border: 1px solid #E93071;
+	border-radius: 4px;
+}
+.pages > li {
+	margin: 0 4px;
+    display: inline;
+}
+.pages > li > a, .pages > li > span {
+    padding: 3px 10px;
+	border: 1px solid #eee;
+	border-radius: 4px;
+}
+.tag {
+    color: #888;
+}
+.archive {
+    margin: 10px;
+}
+.archive > span {
+	color: #C5C5BD;
+    margin-right: 20px;
+}
