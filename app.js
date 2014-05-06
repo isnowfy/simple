@@ -281,7 +281,7 @@ $(document).ready(function() {
                             gconfig.pages = posts;
                         }
                         repo.remove("master", now.path, function(err) {
-                            repo.write("master", "main.json", JSON.stringify(gconfig), "simple", function(err) {
+                            repo.write("master", "main.json", JSON.stringify(gconfig), "remove", function(err) {
                                 temp.posts.init(param);
                                 temp.posts.active();
                             });
@@ -317,8 +317,8 @@ $(document).ready(function() {
                             posts[mark] = now;
                         else
                             posts.unshift(now);
-                        var content = $("#edithtml").html();
-                        var md = $("#editmd").val();
+                        var content = $("#edithtml").html().replace(/\$/mg, "$$$$");
+                        var md = $("#editmd").val().replace(/\$/mg, "$$$$");
                         $.ajax({
                             url: template, 
                             type: "GET",
@@ -327,8 +327,8 @@ $(document).ready(function() {
                                 data = data.replace(contentpattern, "<!-- content -->\n"+content+"\n<!-- content end -->\n");
                                 data = data.replace("//path//", now.path);
                                 data = data.replace(mdpattern, "<!-- markdown -->\n"+md+"\n<!-- markdown end -->\n");
-                                repo.write("master", now.path, data, "simple", function(err) {
-                                    repo.write("master", "main.json", JSON.stringify(gconfig), "simple", function(err) {
+                                repo.write("master", now.path, data, "save", function(err) {
+                                    repo.write("master", "main.json", JSON.stringify(gconfig), "save", function(err) {
                                         if (!errShow($("saveerror", err))) {
                                             temp.posts.init(param);
                                             temp.posts.active();
