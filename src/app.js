@@ -254,6 +254,7 @@ $(document).ready(function() {
             this.logins = new Logins();
             this.mains = new Mains();
             this.posts = new Posts();
+            $("#postDelete").click(function(){return confirm("Are you sure you want to delete?");});
             this.routes({
                 "": function() {this.logins.init();this.logins.active();},
                 "/main": function() {this.mains.init();this.mains.active();},
