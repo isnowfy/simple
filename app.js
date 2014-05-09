@@ -262,6 +262,9 @@ $(document).ready(function() {
                     var num = Math.floor(param.num);
                     var temp = this;
                     if (type.slice(0, 6) == "delete") {
+                        var ret = confirm("Are you sure you want to delete?");
+                        if (!ret)
+                            return;
                         $("#loading").show();
                         var posts = [];
                         if (type == "deletepost") {
