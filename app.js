@@ -161,7 +161,7 @@ $(document).ready(function() {
     var Posts = Spine.Controller.sub({
         el: $("#posts"),
         events: {
-            "click #deletePost": "predelete",
+            "click #postDelete": "predelete",
         },
         predelete: function() {
             return confirm("Are you sure you want to delete?");
