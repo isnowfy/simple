@@ -37,6 +37,7 @@ With Simple and github pages you can easily create your static blog. Here is wha
 * Markdown editor
 * Code highlight support
 * Tex formula support
+* Responsive html
 
 ##Custom
 

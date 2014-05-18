@@ -7,6 +7,9 @@ body {
 	width: 600px;
     position: relative;
 }
+#disqus_thread {
+    padding: 16px;
+}
 .wrap-header h1 {
     width: 100%;
     height: 40px;
@@ -110,4 +113,17 @@ a:hover {
 .archive > span {
 	color: #C5C5BD;
     margin-right: 20px;
+}
+@media (max-width: 800px) {
+    .main {
+        width: 500px;
+    }
+    .header {
+        margin: 70px 0 0 -180px;
+    }
+}
+@media (max-width: 600px) {
+    .main {
+        width: 100%;
+    }
 }
