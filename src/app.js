@@ -14,8 +14,8 @@ Date.prototype.yyyymmdd = function() {
 function mdupdate() {
     var converter = new Showdown.converter();
     var tmp = $("#editmd").val();
-    tmp = tmp.replace(/~~~~\{(.*)\}\n([\s\S]*)~~~~\n/m, "<pre><code class=\"language-$1\">$2</code></pre>");
-    tmp = tmp.replace(/~~~~\n([\s\S]*)~~~~\n/m, "<pre><code>$1</code></pre>");
+    tmp = tmp.replace(/~~~~\{(.*)\}\n([\s\S]*?)~~~~\n/mg, "<pre><code class=\"language-$1\">$2</code></pre>");
+    tmp = tmp.replace(/~~~~\n([\s\S]*?)~~~~\n/mg, "<pre><code>$1</code></pre>");
     tmp = converter.makeHtml(tmp);
     $("#edithtml").html(tmp);
     Prism.highlightAll();
