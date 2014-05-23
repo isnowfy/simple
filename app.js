@@ -281,7 +281,7 @@ $(document).ready(function() {
                             }
                             gconfig.pages = posts;
                         }
-                        repo.remove("master", now.path, function(err) {
+                        repo.delete("master", now.path, function(err) {
                             repo.write("master", "main.json", JSON.stringify(gconfig), "remove", function(err) {
                                 temp.posts.init(param);
                                 temp.posts.active();
