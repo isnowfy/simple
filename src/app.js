@@ -11,11 +11,14 @@ Date.prototype.yyyymmdd = function() {
     var dd  = this.getDate().toString();
     return yyyy + "-" + (mm[1]?mm:"0"+mm[0]) + "-" + (dd[1]?dd:"0"+dd[0]);
 };
+function reescape(data) {
+    return data.replace(/>/g, "&gt;").replace(/</g, "&lt;");
+}
 function mdupdate() {
     var converter = new Showdown.converter();
     var tmp = $("#editmd").val();
-    tmp = tmp.replace(/~~~~\{(.*)\}\n([\s\S]*?)~~~~\n/mg, "<pre><code class=\"language-$1\">$2</code></pre>");
-    tmp = tmp.replace(/~~~~\n([\s\S]*?)~~~~\n/mg, "<pre><code>$1</code></pre>");
+    tmp = tmp.replace(/~~~~\{(.*)\}\n([\s\S]*?)~~~~\n/mg, function(a1, a2, a3) {return "<pre><code class=\"language-"+a2+"\">"+reescape(a3)+"</code></pre>";});
+    tmp = tmp.replace(/~~~~\n([\s\S]*?)~~~~\n/mg, function(a1, a2) {return "<pre><code>"+reescape(a2)+"</code></pre>"});
     tmp = converter.makeHtml(tmp);
     $("#edithtml").html(tmp);
     Prism.highlightAll();

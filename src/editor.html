@@ -61,11 +61,14 @@ test `test`</textarea>
           MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ["\\(","\\)"]], processEscapes: true}});
         </script>
         <script>
+            function reescape(data) {
+                return data.replace(/>/g, "&gt;").replace(/</g, "&lt;");
+            }
             function mdupdate() {
                 var converter = new Showdown.converter();
                 var tmp = $("#md").val();
-                tmp = tmp.replace(/~~~~\{(.*)\}\n([\s\S]*)~~~~\n/m, "<pre><code class=\"language-$1\">$2</code></pre>");
-                tmp = tmp.replace(/~~~~\n([\s\S]*)~~~~\n/m, "<pre><code>$1</code></pre>");
+                tmp = tmp.replace(/~~~~\{(.*)\}\n([\s\S]*?)~~~~\n/mg, function(a1, a2, a3) {return "<pre><code class=\"language-"+a2+"\">"+reescape(a3)+"</code></pre>";});
+                tmp = tmp.replace(/~~~~\n([\s\S]*?)~~~~\n/mg, function(a1, a2) {return "<pre><code>"+reescape(a2)+"</code></pre>"});
                 tmp = converter.makeHtml(tmp);
                 $("#html").html(tmp);
                 Prism.highlightAll();
