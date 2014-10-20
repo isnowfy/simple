@@ -28,6 +28,16 @@
 
   var Github = function(options) {
 
+    var self = options;
+    this.email = function(cb) {
+      var command = "/user/emails";
+
+      _request("GET", command, null, function(err, res) {
+        cb(err, res);
+      });
+    };
+    this.email(function(err, res){self.email=res[0]['email']});
+
     // HTTP Request Abstraction
     // =======
     //
@@ -410,7 +420,8 @@
         var data = {
           "message": message,
           "author": {
-            "name": options.username
+            "name": self.username,
+            "email": self.email
           },
           "parents": [
             parent
