@@ -17,6 +17,7 @@ function reescape(data) {
 function mdupdate() {
     var converter = new Showdown.converter();
     var tmp = $("#editmd").val();
+    sessionStorage.setItem("editmd", tmp);
     tmp = tmp.replace(/~~~~\{(.*)\}\n([\s\S]*?)~~~~\n/mg, function(a1, a2, a3) {return "<pre><code class=\"language-"+a2+"\">"+reescape(a3)+"</code></pre>";});
     tmp = tmp.replace(/~~~~\n([\s\S]*?)~~~~\n/mg, function(a1, a2) {return "<pre><code>"+reescape(a2)+"</code></pre>"});
     tmp = converter.makeHtml(tmp);
@@ -182,7 +183,7 @@ $(document).ready(function() {
                     $("#postpath").val("");
                     $("#postdate").val("");
                     $("#posttags").val("");
-                    $("#editmd").val("");
+                    $("#editmd").val(sessionStorage.getItem("editmd") || "");
                     $("#edithtml").html("");
                     var config = JSON.parse(data);
                     config.posts.sort(function(a, b){
