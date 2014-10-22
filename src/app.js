@@ -359,4 +359,52 @@ $(document).ready(function() {
     $("#editmd").on("keyup", function() {
         mdupdate();
     });
+    $("#editmd").on("dragenter", function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+    });
+    $("#editmd").on("dragover", function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+    });
+    $("#editmd").on("drop", function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        var a = e.originalEvent;
+        var files = a.target.files || a.dataTransfer && a.dataTransfer.files;
+        var tmp = null;
+        for (var i = 0; i < files.length; i++) {
+            if (files[i].type.match("image.*")) {
+                tmp = files[i];
+                break;
+            }
+        }
+        if (tmp != null) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var name = tmp.name;
+                var data = reader.result;
+                var cursor = $("#editmd")[0].selectionStart;
+                var content = $("#editmd").val();
+                var l = content.length;
+                var head = content.substring(0, cursor);
+                var tail = content.substring(cursor, l);
+                var url = " ![](http://"+global.user+".github.io/img/"+name+")";
+                $("#editmd").val(head+"<span class=\"loading\">upload image now!</span>"+tail);
+                mdupdate();
+                repo.write("master", "img/"+name, data, "upload image",
+                           function(e) {
+                               if (typeof err != "undefined" && err != null) {
+                                   console.log(err);
+                                   $("#editmd").val(head+"upload image failed"+tail);
+                               }
+                               else {
+                                   $("#editmd").val(head+url+tail);
+                               }
+                               mdupdate();
+                });
+            };
+            reader.readAsArrayBuffer(tmp);
+        }
+    });
 });
