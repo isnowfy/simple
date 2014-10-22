@@ -183,7 +183,7 @@ $(document).ready(function() {
                     $("#postpath").val("");
                     $("#postdate").val("");
                     $("#posttags").val("");
-                    $("#editmd").val(sessionStorage.getItem("editmd") || "");
+                    $("#editmd").val(sessionStorage.getItem("editmd") || "before begin to write please click 'new post' or 'new page' first");
                     $("#edithtml").html("");
                     var config = JSON.parse(data);
                     config.posts.sort(function(a, b){
