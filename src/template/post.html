@@ -41,10 +41,6 @@
 	</div>
 </div>
 <script src="main.js"></script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ["\\(", "\\)"]], processEscapes: true}});
-</script>
 <script id="content" type="text/mustache">
     <h1>{{title}}</h1>
     <div class="tag">
@@ -99,6 +95,10 @@ $(document).ready(function() {
         }
     });
 });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ["\\(", "\\)"]], processEscapes: true}});
 </script>
 </body>
 </html>
