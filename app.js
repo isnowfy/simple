@@ -239,14 +239,16 @@ $(document).ready(function() {
                         $("#postpath").val(now.path);
                         $("#postdate").val(now.date);
                         $("#posttags").val(now.tags);
-                        $("#loading").show();
-                        repo.read("master", now.path, function(err, data) {
-                            $("#loading").hide();
-                            var content = data.match(contentpattern)[1];
-                            var md = data.match(mdpattern)[1];
-                            $("#editmd").val(md);
-                            $("#edithtml").html(content);
-                        });
+                        if (now.path.slice(0, 5) != "http:" && now.path.slice(0, 6) != "https:") {
+                            $("#loading").show();
+                            repo.read("master", now.path, function(err, data) {
+                                $("#loading").hide();
+                                var content = data.match(contentpattern)[1];
+                                var md = data.match(mdpattern)[1];
+                                $("#editmd").val(md);
+                                $("#edithtml").html(content);
+                            });
+                        }
                     }
                 });
             }
@@ -286,10 +288,16 @@ $(document).ready(function() {
                             gconfig.pages = posts;
                         }
                         repo.write("master", "main.json", JSON.stringify(gconfig), "remove", function(err) {
-                            repo.delete("master", now.path, function(err) {
+                            if (now.path.slice(0, 5) != "http:" && now.path.slice(0, 6) != "https:") {
+                                repo.delete("master", now.path, function(err) {
+                                    temp.posts.init(param);
+                                    temp.posts.active();
+                                });
+                            }
+                            else {
                                 temp.posts.init(param);
                                 temp.posts.active();
-                            });
+                            }
                         });
                     }
                     else {
@@ -332,14 +340,24 @@ $(document).ready(function() {
                                 data = data.replace(contentpattern, "<!-- content -->\n"+content+"\n<!-- content end -->\n");
                                 data = data.replace("//path//", now.path);
                                 data = data.replace(mdpattern, "<!-- markdown -->\n"+md+"\n<!-- markdown end -->\n");
-                                repo.write("master", now.path, data, "save", function(err) {
+                                if (now.path.slice(0, 5) != "http:" && now.path.slice(0, 6) != "https:") {
+                                    repo.write("master", now.path, data, "save", function(err) {
+                                        repo.write("master", "main.json", JSON.stringify(gconfig), "save", function(err) {
+                                            if (!errShow($("saveerror", err))) {
+                                                temp.posts.init(param);
+                                                temp.posts.active();
+                                            }
+                                        });    
+                                    });
+                                }
+                                else {
                                     repo.write("master", "main.json", JSON.stringify(gconfig), "save", function(err) {
                                         if (!errShow($("saveerror", err))) {
                                             temp.posts.init(param);
                                             temp.posts.active();
                                         }
-                                    });    
-                                });
+                                    });
+                                }
                             },
                             error: function(e) {err(e);}
                         });
