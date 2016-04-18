@@ -162,8 +162,11 @@ html, body, .container, #views, #posts, .row, .post-content {
 }
 
 #editContent {
-    height: 100%;
-    width: 100%;
+    top: 80px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
     border-top: 1px solid #eee;
     overflow-y: auto;
 }
