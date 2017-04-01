@@ -1,8 +1,8 @@
-#Simple
+# Simple
 
 Simple is a static blog generator with a single static page. You can write you blog online, and it will generate static html files at your repo named `username.github.io` which is supported by [github pages](https://pages.github.com)
 
-##Demo
+## Demo
 
 [Simple](http://isnowfy.github.io/simple)
 
@@ -10,7 +10,7 @@ Simple is a static blog generator with a single static page. You can write you b
 
 [Lightweight markdown editor](http://isnowfy.github.io/simple/editor.html)
 
-##Usage
+## Usage
 
 With Simple and github pages you can easily create your static blog. Here is what you need to do.
 
@@ -30,7 +30,7 @@ With Simple and github pages you can easily create your static blog. Here is wha
 
 * You can use your own custom domain, just modify the `CNAME` file.(see [also](https://help.github.com/articles/setting-up-a-custom-domain-with-github-pages))
 
-##Features
+## Features
 
 * Simple, no backend need
 * Static blog
@@ -40,14 +40,14 @@ With Simple and github pages you can easily create your static blog. Here is wha
 * Responsive html
 * Drag and drop to upload image
 
-##Custom
+## Custom
 
 The template files are at `/src/template`, so you can modify the template files and css files. If you want use your own theme you can clone the project, modify the template files and push the entire `src` folder in your `gh-pages` branch which will allow you generate your own static blog.
 
-##Todo
+## Todo
 
 Enhance error display, Search, Sitemap, Rss
 
-##License
+## License
 
 MIT licensed.
