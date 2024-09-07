@@ -25,29 +25,4 @@ With Simple and github pages you can easily create your static blog. Here is wha
 ![simple](http://isnowfy.github.io/img/Simple.png)
 
 * You can use your own blog name, just modify the `main.json` file, and change `name="username"`.
-
-* You can use disqus comment system, just modify the `main.json` file, and change `disqus_shortname=""` to `disqus_shortname="your_shortname"`.
-
-* You can use your own custom domain, just modify the `CNAME` file.(see [also](https://help.github.com/articles/setting-up-a-custom-domain-with-github-pages))
-
-## Features
-
-* Simple, no backend need
-* Static blog
-* Markdown editor
-* Code highlight support
-* Tex formula support
-* Responsive html
-* Drag and drop to upload image
-
-## Custom
-
-The template files are at `/src/template`, so you can modify the template files and css files. If you want use your own theme you can clone the project, modify the template files and push the entire `src` folder in your `gh-pages` branch which will allow you generate your own static blog.
-
-## Todo
-
-Enhance error display, Search, Sitemap, Rss
-
-## License
-
 MIT licensed.
